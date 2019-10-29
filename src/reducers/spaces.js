@@ -6,14 +6,6 @@ import {
   SELECT_SPACE
 } from "../actions/types";
 
-import {
-  addSpaces,
-  addSpace,
-  editSpace,
-  deleteSpace,
-  selectSpace
-} from "../actions/creators";
-
 export default function spaces(state = [], action) {
   return state;
 }
