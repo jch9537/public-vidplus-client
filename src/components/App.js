@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import "../App.css";
 import Workspace from "./workspace/Workspace";
+import Signin from "./guest/Signin";
+import Signup from "./guest/Signup";
 
 function App() {
   return (
@@ -15,8 +17,8 @@ function App() {
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>
-        <Route path="/signup" exact></Route>
-        <Route path="/signin" exact></Route>
+        <Route path="/signup" component={Signup}></Route>
+        <Route path="/signin" component={Signin}></Route>
         <Route path="/home" exact></Route>
         <Route path="/spaces/:spaceName" component={Workspace} />
         <Route>404: No Match</Route>
