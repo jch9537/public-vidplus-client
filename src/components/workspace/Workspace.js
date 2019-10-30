@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Title from "./Title";
+import VideoPlayer from "./VideoPlayer";
+import NoteList from "./NoteList";
 import { connect } from "react-redux";
 import { selectSpace } from "../../actions/creators";
 
@@ -42,6 +44,8 @@ class Workspace extends Component {
       return (
         <div>
           <Title spaceName={this.props.match.params.spaceName} />
+          <VideoPlayer />
+          <NoteList />
         </div>
       );
     } else {
