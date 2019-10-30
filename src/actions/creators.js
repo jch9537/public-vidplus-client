@@ -20,7 +20,7 @@ export function addSpace(space) {
 }
 
 export function editSpace(name, id) {
-  return { type: EDIT_SPACE, name };
+  return { type: EDIT_SPACE, name, id };
 }
 
 export function deleteSpace(id) {
@@ -40,7 +40,7 @@ export function addNote(note) {
 }
 
 export function editNote(note, id) {
-  return { type: EDIT_NOTE, note };
+  return { type: EDIT_NOTE, note, id };
 }
 
 export function deleteNote(id) {
