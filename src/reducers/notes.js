@@ -9,7 +9,7 @@ export default function notes(state = [], action) {
     case EDIT_NOTE:
       return state.map(note => {
         if (note.id === action.id) {
-          return { ...note, current: true };
+          return action.note;
         } else {
           return note;
         }

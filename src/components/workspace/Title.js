@@ -9,32 +9,42 @@ class Title extends Component {
     this.onSpaceChange = this.onSpaceChange.bind(this);
   }
 
-  componentDidUpdate() {
-    // After the space has been changed by the select tag
-    this.setState({ shouldRedirect: false });
+  componentDidUpdate(prevProps) {
+    if (prevProps.spaceName !== this.props.spaceName) {
+      // Right after redirection
+      this.setState({ shouldRedirect: false });
+    }
   }
 
   onSpaceChange(e) {
-    // Don't have to set current b/c Workspace will handle that after redirect
-    this.setState({ shouldRedirect: true });
+    this.setState({
+      shouldRedirect: true,
+      path: e.target.value
+    });
   }
 
   render() {
     if (this.state.shouldRedirect) {
-      return <Redirect to={`/${this.state.currSpace.name}`} />;
+      // Browser automatically takes care of URI encoding
+      return <Redirect to={`/spaces/${this.state.path}`} />;
+    } else {
+      return (
+        <div>
+          Workspace:{" "}
+          <select onChange={this.onSpaceChange}>
+            {this.props.spaces.map(space => (
+              <option
+                value={space.name}
+                key={space.id}
+                selected={space.current}
+              >
+                {space.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      );
     }
-    return (
-      <div>
-        Workspace:{" "}
-        <select onChange={this.onSpaceChange}>
-          {this.props.spaces.map(space => (
-            <option value={space.id} selected={space.current}>
-              {space.name}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
   }
 }
 
