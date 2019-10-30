@@ -15,20 +15,32 @@ class Signin extends Component {
 
   signIn() {
     // alert("Email : " + this.state.email + " Password : ", this.state.password);
-    fetch("/user/signin", {
-      email: this.state.email,
-      password: this.state.password
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log("/signin : data::", data);
-        if (data === "Logged in.") {
-          // 홈으로 보내기
-
-          this.props.history.push("/home");
-        }
-      })
-      .catch(error => console.log(error));
+    const { email, password } = this.state;
+    if (email === "") {
+      alert("이메일을 입력해주세요.");
+      return;
+    }
+    if (password === "") {
+      alert("비밀번호를 입력해주세요");
+      return;
+    }
+    this.props.history.push("/home");
+    // fetch("/user/signin", {
+    //   email: this.state.email,
+    //   password: this.state.password
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log("/signin : data::", data);
+    //     if (data === "Logged in.") {
+    //       if (data === "") {
+    //         this.props.history.push("/home");
+    //       } else {
+    //         alert("errorCode : " + data);
+    //       }
+    //     }
+    //   })
+    //   .catch(error => console.log(error));
   }
 
   handleEmailChange(e) {
