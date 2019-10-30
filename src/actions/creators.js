@@ -18,7 +18,7 @@ export function addSpace(space) {
   return { type: ADD_SPACE, space };
 }
 
-export function editSpace(name) {
+export function editSpace(name, id) {
   return { type: EDIT_SPACE, name };
 }
 
@@ -38,7 +38,7 @@ export function addNote(note) {
   return { type: ADD_NOTE, note };
 }
 
-export function editNote(note) {
+export function editNote(note, id) {
   return { type: EDIT_NOTE, note };
 }
 

@@ -12,6 +12,14 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(logger))
 );
 
+store.dispatch({
+  type: "ADD_SPACES",
+  spaces: [
+    { id: 1, name: "Space 1", current: false },
+    { id: 2, name: "Space 2", current: false }
+  ]
+});
+
 ReactDOM.render(
   <Provider store={store}>
     <App />
