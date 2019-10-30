@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import { changeTimestamp } from "../../actions/creators";
 import { connect } from "react-redux";
+import YTPlayer from "yt-player";
 
 class VideoPlayer extends Component {
   constructor(props) {
     super(props);
     const currSpace = this.props.spaces.filter(space => space.current)[0];
-    this.state = { currSpace, time: 0 };
+    this.state = { currSpace };
   }
 
   componentDidUpdate(prevProps, prevState) {
     const currSpace = this.props.spaces.filter(space => space.current)[0];
     if (prevState.currSpace !== currSpace) {
-      this.setState({ currSpace, time: 0 });
+      const videoId = currSpace.url.split("=")[1];
+      this.setState({ currSpace }, () => this.state.player.load(videoId));
     } else if (this.props.timestamp !== null) {
       const time = this.props.timestamp
         .split(":")
@@ -21,25 +23,23 @@ class VideoPlayer extends Component {
             i === 0 ? (acc += parseInt(val) * 60) : (acc += parseInt(val)),
           0
         );
-      this.setState({ time: null }, () => this.setState({ time }));
+      this.state.player.seek(time); // move to specified timestamp
       this.props.changeTimestamp(null);
     }
   }
 
-  render() {
+  componentDidMount() {
     const videoId = this.state.currSpace.url.split("=")[1];
+    this.setState({ player: new YTPlayer(".player") }, () => {
+      this.state.player.load(videoId);
+    });
+  }
 
+  render() {
     return (
+      // Beware: YTPlayer alters DOM, so need to wrap "player" in another div
       <div>
-        <iframe
-          title="videoPlayer"
-          width="560"
-          height="315"
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&start=${this.state.time}`}
-          frameBorder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+        <div className="player"></div>
       </div>
     );
   }
