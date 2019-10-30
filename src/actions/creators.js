@@ -7,7 +7,8 @@ import {
   ADD_NOTES,
   ADD_NOTE,
   EDIT_NOTE,
-  DELETE_NOTE
+  DELETE_NOTE,
+  CHANGE_TIMESTAMP
 } from "./types";
 
 export function addSpaces(spaces) {
@@ -44,4 +45,8 @@ export function editNote(note, id) {
 
 export function deleteNote(id) {
   return { type: DELETE_NOTE, id };
+}
+
+export function changeTimestamp(time) {
+  return { type: CHANGE_TIMESTAMP, time };
 }
