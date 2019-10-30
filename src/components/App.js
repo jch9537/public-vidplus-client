@@ -6,6 +6,7 @@ import {
   Redirect
 } from "react-router-dom";
 import "../App.css";
+import Workspace from "./workspace/Workspace";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <Route path="/signup" exact></Route>
         <Route path="/signin" exact></Route>
         <Route path="/home" exact></Route>
-        <Route path="/:space_name" exact></Route>
+        <Route path="/spaces/:spaceName" component={Workspace} />
         <Route>404: No Match</Route>
       </Switch>
     </Router>
