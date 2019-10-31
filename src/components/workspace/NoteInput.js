@@ -1,27 +1,39 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addNote } from "../../actions/creators";
-import TextareaAutosize from "react-textarea-autosize";
+import { Input } from "antd";
+const { TextArea } = Input;
+
+function searchAvailableId(notes) {
+  const idNums = notes.map(note => note.id);
+  let i = 1;
+  while (idNums.includes(i)) {
+    i++;
+  }
+  return i;
+}
 
 class NoteInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: props.notes.length + 1,
+      id: searchAvailableId(props.notes),
       space_id: props.currSpace.id,
       content: ""
     };
-    this.onType = this.onType.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.onEnter = this.onEnter.bind(this);
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.currSpace !== this.props.currSpace) {
       this.setState({ space_id: this.props.currSpace.id });
+    } else if (prevProps.notes.length !== this.props.notes.length) {
+      this.setState({ id: searchAvailableId(this.props.notes), content: "" });
     }
   }
 
-  onType(e) {
+  onChange(e) {
     this.setState({ content: e.target.value });
   }
 
@@ -34,23 +46,18 @@ class NoteInput extends Component {
       ).slice(-2)}`;
       const content = this.state.content.trim(); // remove \n from enter
       this.props.addNote({ ...this.state, content, timestamp });
-      this.setState({ id: this.state.id + 1, content: "" });
     }
   }
 
   render() {
     return (
-      <TextareaAutosize
+      <TextArea
         value={this.state.content}
-        onChange={this.onType}
+        onChange={this.onChange}
         onKeyUp={this.onEnter}
         placeholder="Add note..."
-        style={{
-          marginTop: "10px",
-          width: "100%",
-          borderRadius: "7px",
-          padding: "5px"
-        }}
+        style={{ marginTop: "10px", fontSize: "16px" }}
+        autoSize
       />
     );
   }

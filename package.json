@@ -20,13 +20,13 @@
   },
   "homepage": "https://github.com/achung3071/vidplus-server#readme",
   "dependencies": {
+    "antd": "^3.24.3",
     "react": "^16.11.0",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.11.0",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
-    "react-textarea-autosize": "^7.1.2",
     "redux": "^4.0.4",
     "yt-player": "^3.4.3"
   },

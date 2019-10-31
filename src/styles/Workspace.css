@@ -48,10 +48,7 @@
 }
 
 .note-div textarea {
-  display: inline-block;
-  width: calc(100% - 50px);
-  background-color: rgb(225, 225, 240);
-  padding: 5px;
-  border: none;
-  border-radius: 7px;
+  width: calc(100% - 60px);
+  font-size: 16px;
+  background-color: rgb(230, 230, 240);
 }
