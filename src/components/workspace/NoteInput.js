@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addNote } from "../../actions/creators";
+import TextareaAutosize from "react-textarea-autosize";
 
 class NoteInput extends Component {
   constructor(props) {
@@ -25,25 +26,32 @@ class NoteInput extends Component {
   }
 
   onEnter(e) {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !e.shiftKey) {
       const currTime = this.props.currTime;
       // prepending zero to single digit seconds
       const timestamp = `${Math.floor(currTime / 60)}:${(
         "0" + Math.round(currTime % 60)
       ).slice(-2)}`;
-      this.props.addNote({ ...this.state, timestamp });
-      this.setState({ id: this.state.id + 1 });
+      const content = this.state.content.trim(); // remove \n from enter
+      this.props.addNote({ ...this.state, content, timestamp });
+      this.setState({ id: this.state.id + 1, content: "" });
     }
   }
 
   render() {
     return (
-      <input
-        type="text"
+      <TextareaAutosize
         value={this.state.content}
         onChange={this.onType}
         onKeyUp={this.onEnter}
-      ></input>
+        placeholder="Add note..."
+        style={{
+          marginTop: "10px",
+          width: "100%",
+          borderRadius: "7px",
+          padding: "5px"
+        }}
+      />
     );
   }
 }
