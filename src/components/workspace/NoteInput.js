@@ -42,7 +42,7 @@ class NoteInput extends Component {
         type="text"
         value={this.state.content}
         onChange={this.onType}
-        onKeyPress={this.onEnter}
+        onKeyUp={this.onEnter}
       ></input>
     );
   }
