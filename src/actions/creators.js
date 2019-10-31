@@ -8,7 +8,8 @@ import {
   ADD_NOTE,
   EDIT_NOTE,
   DELETE_NOTE,
-  CHANGE_TIMESTAMP
+  CHANGE_TIMESTAMP,
+  CHANGE_CURRTIME
 } from "./types";
 
 export function addSpaces(spaces) {
@@ -49,4 +50,8 @@ export function deleteNote(id) {
 
 export function changeTimestamp(time) {
   return { type: CHANGE_TIMESTAMP, time };
+}
+
+export function changeCurrTime(time) {
+  return { type: CHANGE_CURRTIME, time };
 }

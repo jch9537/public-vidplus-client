@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { changeTimestamp } from "../../actions/creators";
+import { changeTimestamp, changeCurrTime } from "../../actions/creators";
 import { connect } from "react-redux";
 import YTPlayer from "yt-player";
 
@@ -32,6 +32,9 @@ class VideoPlayer extends Component {
     const videoId = this.state.currSpace.url.split("=")[1];
     this.setState({ player: new YTPlayer(".player") }, () => {
       this.state.player.load(videoId);
+      this.state.player.on("timeupdate", seconds =>
+        this.props.changeCurrTime(seconds)
+      );
     });
   }
 
@@ -50,7 +53,8 @@ const mapStateToProps = state => ({
   timestamp: state.timestamp
 });
 const mapDispatchToProps = dispatch => ({
-  changeTimestamp: time => dispatch(changeTimestamp(time))
+  changeTimestamp: time => dispatch(changeTimestamp(time)),
+  changeCurrTime: time => dispatch(changeCurrTime(time))
 });
 
 VideoPlayer = connect(
