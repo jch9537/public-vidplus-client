@@ -1,10 +1,4 @@
-import {
-  ADD_NOTES,
-  ADD_NOTE,
-  EDIT_NOTE,
-  DELETE_NOTE,
-  SELECT_NOTE
-} from "../actions/types";
+import { ADD_NOTES, ADD_NOTE, EDIT_NOTE, DELETE_NOTE } from "../actions/types";
 
 export default function notes(state = [], action) {
   switch (action.type) {
@@ -21,17 +15,7 @@ export default function notes(state = [], action) {
         }
       });
     case DELETE_NOTE:
-      return state.filter(note => !note.current);
-    case SELECT_NOTE:
-      return state.map(note => {
-        if (note.id === action.id) {
-          return { ...note, current: true };
-        } else if (note.current) {
-          return { ...note, current: false };
-        } else {
-          return note;
-        }
-      });
+      return state.filter(note => note.id !== action.id);
     default:
       return state;
   }
