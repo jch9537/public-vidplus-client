@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { changeTimestamp, editNote } from "../../actions/creators";
 import { connect } from "react-redux";
-import TextareaAutosize from "react-textarea-autosize";
+import { Input, Button, Icon } from "antd";
+const { TextArea } = Input;
 
 class Note extends Component {
   constructor(props) {
@@ -20,10 +21,18 @@ class Note extends Component {
         <a href="#" onClick={() => changeTimestamp(note.timestamp)}>
           {note.timestamp}
         </a>
-        <TextareaAutosize
-          onChange={this.onChange}
-          value={note.content}
-        ></TextareaAutosize>
+        <TextArea onChange={this.onChange} value={note.content} autoSize />
+        <Button
+          type="primary"
+          shape="circle"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginLeft: "10px"
+          }}
+        >
+          <Icon type="delete" style={{ marginLeft: "7.5px" }}></Icon>
+        </Button>
       </div>
     );
   }
