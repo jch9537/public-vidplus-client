@@ -5,7 +5,7 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import "../App.css";
+import "../styles/App.css";
 import Workspace from "./workspace/Workspace";
 import Signin from "./guest/Signin";
 import Signup from "./guest/Signup";
