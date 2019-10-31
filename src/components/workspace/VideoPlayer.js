@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { changeTimestamp, changeCurrTime } from "../../actions/creators";
 import { connect } from "react-redux";
+import { ResponsiveEmbed } from "react-bootstrap";
 import YTPlayer from "yt-player";
 
 class VideoPlayer extends Component {
@@ -30,20 +31,22 @@ class VideoPlayer extends Component {
 
   componentDidMount() {
     const videoId = this.state.currSpace.url.split("=")[1];
-    this.setState({ player: new YTPlayer(".player") }, () => {
-      this.state.player.load(videoId);
-      this.state.player.on("timeupdate", seconds =>
-        this.props.changeCurrTime(seconds)
-      );
-    });
+    this.setState(
+      { player: new YTPlayer(".player", { width: "", height: "" }) },
+      () => {
+        this.state.player.load(videoId);
+        this.state.player.on("timeupdate", seconds =>
+          this.props.changeCurrTime(seconds)
+        );
+      }
+    );
   }
 
   render() {
     return (
-      // Beware: YTPlayer alters DOM, so need to wrap "player" in another div
-      <div>
+      <ResponsiveEmbed aspectRatio="16by9">
         <div className="player"></div>
-      </div>
+      </ResponsiveEmbed>
     );
   }
 }
