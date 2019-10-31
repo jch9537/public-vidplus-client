@@ -9,6 +9,7 @@ import "../App.css";
 import Workspace from "./workspace/Workspace";
 import Signin from "./guest/Signin";
 import Signup from "./guest/Signup";
+import Home from "./home/Home";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
         </Route>
         <Route path="/signup" component={Signup}></Route>
         <Route path="/signin" component={Signin}></Route>
-        <Route path="/home" exact></Route>
+        <Route path="/home" exact component={Home}></Route>
         <Route path="/spaces/:spaceName" component={Workspace} />
         <Route>404: No Match</Route>
       </Switch>

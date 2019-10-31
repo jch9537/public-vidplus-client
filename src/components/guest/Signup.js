@@ -23,14 +23,14 @@ class Signup extends Component {
     const txtWarning = document.getElementById("txtWarning");
     txtWarning.style.display = "none";
 
-    const nameReg = /^[가-힣]{2,10}$/g;
-    if (name === "") {
+    const passwordReg = /^(?=.*[a-zA-Z])(?=.*[~!@#$%^&*_-]).{8,12}$/g;
+    if (password === "") {
       txtWarning.style.display = "block";
-      txtWarning.innerHTML = "이름을 입력해주세요";
+      txtWarning.innerHTML = "비밀번호를 입력해주세요.";
       result = false;
-    } else if (!nameReg.test(name)) {
+    } else if (!passwordReg.test(password)) {
       txtWarning.style.display = "block";
-      txtWarning.innerHTML = "한글로 입력해주세요";
+      txtWarning.innerHTML = "비밀번호 영문, 숫자, 특수문자 조합 8~12자";
       result = false;
     }
 
@@ -45,21 +45,21 @@ class Signup extends Component {
       result = false;
     }
 
-    const passwordReg = /^(?=.*[a-zA-Z])(?=.*[~!@#$%^&*_-]).{8,12}$/g;
-    if (password === "") {
+    const nameReg = /^[가-힣]{2,10}$/g;
+    if (name === "") {
       txtWarning.style.display = "block";
-      txtWarning.innerHTML = "비밀번호를 입력해주세요.";
+      txtWarning.innerHTML = "이름을 입력해주세요";
       result = false;
-    } else if (!passwordReg.test(password)) {
+    } else if (!nameReg.test(name)) {
       txtWarning.style.display = "block";
-      txtWarning.innerHTML = "비밀번호 영문, 숫자, 특수문자 조합 8~12자";
+      txtWarning.innerHTML = "한글로 입력해주세요";
       result = false;
     }
     return result;
   }
 
   signUp() {
-    const { name, email, password } = this.state;
+    //const { name, email, password } = this.state;
     if (this.vaildCheck()) {
       this.props.history.push("/signin");
 
