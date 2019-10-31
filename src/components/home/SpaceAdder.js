@@ -32,12 +32,17 @@ class SpaceAdder extends Component {
       result = false;
     }
 
-    const urlReg = /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g;
+    //const urlReg = /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g;
+    const youTubeRegs = [
+      /https?:\/\/youtu.be\/([a-zA-Z0-9\-_]+)/gi,
+      /https?:\/\/www.youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)/gi
+    ];
+
     if (url === "") {
       txtWarning.style.display = "block";
       txtWarning.innerHTML = "url을 입력해주세요";
       result = false;
-    } else if (!urlReg.test(url)) {
+    } else if (!youTubeRegs[0].test(url) && !youTubeRegs[1].test(url)) {
       txtWarning.style.display = "block";
       txtWarning.innerHTML = "url 형식에 맞게 입력해주세요";
       result = false;
@@ -54,12 +59,14 @@ class SpaceAdder extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    const { url, name } = this.state;
-    let tempId = 2;
-    const space = { id: tempId++, url, name };
-    const { addSpace } = this.props;
-    console.log("add : space, ", space, addSpace);
+    document.getElementById("inputUrl").value = "";
+    document.getElementById("inputName").value = "";
     if (this.vaildCheck()) {
+      const { url, name } = this.state;
+      let tempId = 2;
+      const space = { id: tempId + 1, url, name };
+      const { addSpace } = this.props;
+
       addSpace(space);
     }
   }
@@ -70,11 +77,13 @@ class SpaceAdder extends Component {
         <form className="form-spaceAdd" onSubmit={this.handleSubmit}>
           <input
             type="text"
+            id="inputUrl"
             onChange={this.handleUrlChange}
             placeholder="paste your url"
           />
           <input
             type="text"
+            id="inputName"
             onChange={this.handleNameChange}
             placeholder="write space name"
           />

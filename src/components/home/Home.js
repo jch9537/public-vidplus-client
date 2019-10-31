@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addSpaces } from "../../actions/creators";
+// import { addSpaces } from "../../actions/creators";
 import Table from "./Table";
 
 class Home extends Component {
-  componentDidMount(spaces) {
-    const { addSpaces } = this.props;
-    addSpaces(spaces);
-  }
   render() {
     const { spaces } = this.props;
     return (
@@ -22,14 +18,11 @@ const mapStateToProps = state => {
     spaces: state.spaces
   };
 };
-const mapDispatchToProps = dispatch => {
-  return {
-    addSpaces: spaces => dispatch(addSpaces(spaces))
-  };
-};
-Home = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     addSpaces: spaces => dispatch(addSpaces(spaces))
+//   };
+// };
+Home = connect(mapStateToProps)(Home);
 
 export default Home;
