@@ -10,3 +10,4 @@ export const EDIT_NOTE = "EDIT_NOTE";
 export const DELETE_NOTE = "DELETE_NOTE";
 
 export const CHANGE_TIMESTAMP = "CHANGE_TIMESTAMP";
+export const CHANGE_CURRTIME = "CHANGE_CURRTIME";

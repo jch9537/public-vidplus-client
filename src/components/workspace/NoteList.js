@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Note from "./Note";
+import NoteInput from "./NoteInput";
 
 class NoteList extends Component {
   constructor(props) {
@@ -12,7 +13,10 @@ class NoteList extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const currSpace = this.props.spaces.filter(space => space.current)[0];
-    if (prevState.currSpace !== currSpace) {
+    if (
+      prevState.currSpace !== currSpace ||
+      prevProps.notes !== this.props.notes
+    ) {
       const notes = this.props.notes.filter(
         notes => notes.space_id === currSpace.id
       );
@@ -26,6 +30,7 @@ class NoteList extends Component {
         {this.state.notes.map((note, i) => (
           <Note note={note} key={i} />
         ))}
+        <NoteInput currSpace={this.state.currSpace} />
       </div>
     );
   }
