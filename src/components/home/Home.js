@@ -4,7 +4,7 @@ import { addSpaces } from "../../actions/creators";
 import Table from "./Table";
 
 class Home extends Component {
-  componentDidMout(spaces) {
+  componentDidMount(spaces) {
     const { addSpaces } = this.props;
     addSpaces(spaces);
   }
