@@ -5,8 +5,13 @@ import {
   DELETE_SPACE,
   SELECT_SPACE
 } from "../actions/types";
+const initialState = [
+  { id: 0, url: "www.naver.com", name: "네이버1" },
+  { id: 1, url: "www.naver.com", name: "네이버2" },
+  { id: 2, url: "www.naver.com", name: "네이버3" }
+];
 
-export default function spaces(state = [], action) {
+export default function spaces(state = initialState, action) {
   switch (action.type) {
     case ADD_SPACES:
       return action.spaces;

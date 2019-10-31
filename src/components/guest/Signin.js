@@ -33,7 +33,6 @@ class Signin extends Component {
     //   .then(data => {
     //     console.log("/signin : data::", data);
     //     if (data === "Logged in.") {
-    //       if (data === "") {
     //         this.props.history.push("/home");
     //       } else {
     //         alert("errorCode : " + data);
@@ -86,16 +85,18 @@ class Signin extends Component {
   }
 }
 
-const signOut = () => {
-  fetch("/user/signout")
-    .then(response => response.json())
-    .then(data => {
-      console.log("/signout : data::", data);
-      if (data === "Logged out.") {
-        // siginin으로 보내기
-        this.props.history.push("/signin");
-      }
-    })
-    .catch(error => console.log(error));
-};
+// const signOut = () => {
+//   fetch("/user/signout")
+//     .then(response => response.json())
+//     .then(data => {
+//       console.log("/signout : data::", data);
+//       if (data === "Logged out.") {
+//         // siginin으로 보내기
+//         this.props.history.push("/signin");
+//       } else {
+//         alert("errorCode : " + data);
+//       }
+//     })
+//     .catch(error => console.log(error));
+// };
 export default Signin;
