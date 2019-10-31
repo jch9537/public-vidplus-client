@@ -36,7 +36,9 @@ class Title extends Component {
       return (
         <Row className="workspace-title">
           <Col xs={2.5}>
-            <h2 style={{ display: "inline" }}>Workspace Name:</h2>
+            <h2 style={{ display: "inline", fontWeight: 400 }}>
+              Workspace Name:
+            </h2>
           </Col>
           <Col className="workspace-toggle-col">
             <Dropdown style={{ display: "inline" }}>
