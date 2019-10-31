@@ -8,6 +8,7 @@ import {
   ADD_NOTE,
   EDIT_NOTE,
   DELETE_NOTE,
+  SELECT_NOTE,
   CHANGE_TIMESTAMP,
   CHANGE_CURRTIME
 } from "./types";
@@ -40,12 +41,16 @@ export function addNote(note) {
   return { type: ADD_NOTE, note };
 }
 
-export function editNote(note, id) {
-  return { type: EDIT_NOTE, note, id };
+export function editNote(note) {
+  return { type: EDIT_NOTE, note };
 }
 
-export function deleteNote(id) {
-  return { type: DELETE_NOTE, id };
+export function deleteNote() {
+  return { type: DELETE_NOTE };
+}
+
+export function selectNote(id) {
+  return { type: SELECT_NOTE, id };
 }
 
 export function changeTimestamp(time) {
