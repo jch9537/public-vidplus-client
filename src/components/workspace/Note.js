@@ -22,15 +22,7 @@ class Note extends Component {
           {note.timestamp}
         </a>
         <TextArea onChange={this.onChange} value={note.content} autoSize />
-        <Button
-          type="primary"
-          shape="circle"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            marginLeft: "10px"
-          }}
-        >
+        <Button type="primary" shape="circle" className="delete-note">
           <Icon type="delete" style={{ marginLeft: "7.5px" }}></Icon>
         </Button>
       </div>

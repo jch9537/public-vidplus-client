@@ -52,3 +52,9 @@
   font-size: 16px;
   background-color: rgb(230, 230, 240);
 }
+
+.note-div .delete-note {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
