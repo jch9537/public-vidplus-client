@@ -1,46 +1,37 @@
 import React, { Component } from "react";
-import { changeTimestamp } from "../../actions/creators";
+import { changeTimestamp, editNote } from "../../actions/creators";
 import { connect } from "react-redux";
-import EditableNote from "./EditableNote";
+import TextareaAutosize from "react-textarea-autosize";
 
 class Note extends Component {
   constructor(props) {
     super(props);
-    this.changeTime = this.changeTime.bind(this);
-    this.state = { editable: false };
-    this.editNote = this.editNote.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  changeTime(time) {
-    this.props.changeTimestamp(time);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.note !== this.props.note) {
-      this.setState({ editable: false });
-    }
-  }
-
-  editNote() {
-    this.setState({ editable: true });
+  onChange(e) {
+    this.props.editNote({ ...this.props.note, content: e.target.value });
   }
 
   render() {
-    return this.state.editable ? (
-      <EditableNote note={this.props.note} />
-    ) : (
-      <div>
-        <button onClick={() => this.changeTime(this.props.note.timestamp)}>
-          {this.props.note.timestamp}
-        </button>
-        <span onDoubleClick={this.editNote}>{this.props.note.content}</span>
+    const { note, changeTimestamp } = this.props;
+    return (
+      <div className="note-div">
+        <a href="#" onClick={() => changeTimestamp(note.timestamp)}>
+          {note.timestamp}
+        </a>
+        <TextareaAutosize
+          onChange={this.onChange}
+          value={note.content}
+        ></TextareaAutosize>
       </div>
     );
   }
 }
 
 const matchDispatchToProps = dispatch => ({
-  changeTimestamp: time => dispatch(changeTimestamp(time))
+  changeTimestamp: time => dispatch(changeTimestamp(time)),
+  editNote: note => dispatch(editNote(note))
 });
 Note = connect(
   null,
