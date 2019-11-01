@@ -1,31 +1,9 @@
 import React from "react";
+import SpaceEntry from "./SpaceEntry";
 
-const Space = ({ space, onEdit, onDelete }) => {
-  return (
-    <tr>
-      <td>
-        <input type="text" value={space.name} onChange={onEdit} />
-      </td>
-      <td>{space.id} Notes</td>
-      <td>Modified {space.updateAt}</td>
-      <td>
-        <button type="button" onClick={onDelete}>
-          Delete
-        </button>
-      </td>
-    </tr>
-  );
-};
-
-const SpaceList = ({ spaces, onEdit, onDelete, onSelect }) => {
+const SpaceList = ({ spaces }) => {
   const spaceList = spaces.map(space => (
-    <Space
-      space={space}
-      key={space.id}
-      onEdit={() => onEdit(space.id)}
-      onDelete={() => onDelete(space.id)}
-      onClick={() => onSelect(space.id)}
-    />
+    <SpaceEntry space={space} key={space.id} />
   ));
 
   return (
