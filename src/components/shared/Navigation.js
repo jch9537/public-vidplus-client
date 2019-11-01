@@ -8,7 +8,8 @@ export default class Navigation extends Component {
     this.state = {
       iconStyle: {
         fontSize: "30px",
-        marginLeft: "-8px"
+        marginLeft: "-8px",
+        marginTop: "-5px"
       },
       collapsed: true
     };
@@ -18,12 +19,20 @@ export default class Navigation extends Component {
   onCollapse(collapsed) {
     if (collapsed) {
       this.setState({
-        iconStyle: { ...this.state.iconStyle, marginLeft: "-8px" },
+        iconStyle: {
+          ...this.state.iconStyle,
+          marginLeft: "-8px",
+          marginTop: "-5px"
+        },
         collapsed
       });
     } else {
       this.setState({
-        iconStyle: { ...this.state.iconStyle, marginLeft: "3px" },
+        iconStyle: {
+          ...this.state.iconStyle,
+          marginLeft: "3px",
+          marginTop: "0px"
+        },
         collapsed
       });
     }
