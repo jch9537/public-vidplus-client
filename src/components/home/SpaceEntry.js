@@ -29,9 +29,7 @@ class SpaceEntry extends Component {
     this.setState({ name: e.target.value });
   }
   handleEdit(id) {
-    console.log("여기 안오나요?");
     const { name } = this.state;
-    console.log("change::", id, name);
     const { editSpace } = this.props;
     editSpace(name, id);
     this.setState({
