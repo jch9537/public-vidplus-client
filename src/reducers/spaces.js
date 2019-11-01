@@ -1,9 +1,9 @@
 import {
-  ADD_SPACES,
-  ADD_SPACE,
-  EDIT_SPACE,
-  DELETE_SPACE,
-  SELECT_SPACE
+  ADD_SPACES_ASYNC,
+  ADD_SPACE_ASYNC,
+  EDIT_SPACE_ASYNC,
+  DELETE_SPACE_ASYNC,
+  SELECT_SPACE_ASYNC
 } from "../actions/types";
 const initialState = [
   {
@@ -20,19 +20,19 @@ const initialState = [
 
 export default function spaces(state = initialState, action) {
   switch (action.type) {
-    case ADD_SPACES:
+    case ADD_SPACES_ASYNC:
       return action.spaces;
-    case ADD_SPACE:
+    case ADD_SPACE_ASYNC:
       // PREVIOUS CODE: return { ...action.space, current: true };
       return [...state, { ...action.space, current: false }];
-    case EDIT_SPACE:
+    case EDIT_SPACE_ASYNC:
       return state.map(space => {
         // PREVIOUS CODE: return space.current ? { ...space, name: action.name } : space;
         return space.id === action.id ? { ...space, name: action.name } : space;
       });
-    case DELETE_SPACE:
+    case DELETE_SPACE_ASYNC:
       return state.filter(space => space.id !== action.id);
-    case SELECT_SPACE:
+    case SELECT_SPACE_ASYNC:
       return state.map(space => {
         if (space.id === action.id) {
           // 새로운 current space를 지정해준다
