@@ -8,12 +8,12 @@ const SpaceList = ({ spaces }) => {
 
   return (
     <div>
-      <table>
+      <table width="100%">
         {/* <caption>Work Spaces</caption> */}
         <colgroup>
-          <col width="35%" />
+          <col width="45%" />
+          <col width="15%" />
           <col width="25%" />
-          <col width="30%" />
           <col width="" />
         </colgroup>
         <tbody>{spaceList}</tbody>

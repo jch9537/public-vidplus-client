@@ -6,9 +6,16 @@ import {
   SELECT_SPACE
 } from "../actions/types";
 const initialState = [
-  { id: 0, url: "www.naver.com", name: "네이버1" },
-  { id: 1, url: "www.naver.com", name: "네이버2" },
-  { id: 2, url: "www.naver.com", name: "네이버3" }
+  {
+    id: 0,
+    url: "https://www.youtube.com/watch?v=568g8hxJJp4",
+    name: "funfunfunction_async"
+  },
+  {
+    id: 1,
+    url: "https://www.youtube.com/watch?v=2d7s3spWAzo",
+    name: "funfunfunction_promise"
+  }
 ];
 
 export default function spaces(state = initialState, action) {
