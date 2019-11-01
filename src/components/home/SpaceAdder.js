@@ -10,6 +10,7 @@ class SpaceAdder extends Component {
     this.handleUrlChange = this.handleUrlChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
+      maxId: 2,
       url: "",
       name: ""
     };
@@ -21,7 +22,7 @@ class SpaceAdder extends Component {
     const txtWarning = document.getElementById("txtWarning");
     txtWarning.style.display = "none";
 
-    const nameReg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|*]+$/g;
+    const nameReg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|._\-|*]+$/g;
     if (name === "") {
       txtWarning.style.display = "block";
       txtWarning.innerHTML = "Workspace 이름을 입력해주세요";
@@ -29,6 +30,7 @@ class SpaceAdder extends Component {
     } else if (!nameReg.test(name)) {
       txtWarning.style.display = "block";
       txtWarning.innerHTML = "빈칸 없이 텍스트로 입력해주세요";
+      this.setState({ name: "" });
       result = false;
     }
 
@@ -45,12 +47,12 @@ class SpaceAdder extends Component {
     } else if (!youTubeRegs[0].test(url) && !youTubeRegs[1].test(url)) {
       txtWarning.style.display = "block";
       txtWarning.innerHTML = "url 형식에 맞게 입력해주세요";
+      this.setState({ url: "" });
       result = false;
     }
     console.log("validate::", result);
     return result;
   }
-
   handleUrlChange(e) {
     this.setState({ url: e.target.value });
   }
@@ -59,15 +61,14 @@ class SpaceAdder extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    document.getElementById("inputUrl").value = "";
-    document.getElementById("inputName").value = "";
     if (this.vaildCheck()) {
-      const { url, name } = this.state;
-      let tempId = 2;
-      const space = { id: tempId + 1, url, name };
-      const { addSpace } = this.props;
+      const { maxId, url, name } = this.state;
+      const space = { id: maxId + 1, url, name };
 
+      const { addSpace } = this.props;
       addSpace(space);
+
+      this.setState({ maxId: space.id, url: "", name: "" });
     }
   }
 
@@ -78,14 +79,16 @@ class SpaceAdder extends Component {
           <input
             type="text"
             id="inputUrl"
+            value={this.state.url}
             onChange={this.handleUrlChange}
             placeholder="paste your url"
           />
           <input
             type="text"
             id="inputName"
+            value={this.state.name}
             onChange={this.handleNameChange}
-            placeholder="write space name"
+            placeholder="write space name! ex) abc.1_가-ABC"
           />
           <button type="submit">+</button>
         </form>
