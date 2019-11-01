@@ -15,12 +15,14 @@ import {
   addSpaceAsync,
   editSpaceAsync,
   deleteSpaceAsync,
-  selectSpaceAsync,
+  selectSpaceAsync
+} from "./spaceWorkers";
+import {
   addNotesAsync,
   addNoteAsync,
   editNoteAsync,
   deleteNoteAsync
-} from "./workers";
+} from "./noteWorkers";
 
 export default function* rootSaga() {
   yield all([spacesSaga(), notesSaga()]);
