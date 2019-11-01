@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import api from "../../api";
 
 class Signup extends Component {
   constructor(props) {
@@ -63,19 +64,19 @@ class Signup extends Component {
     if (this.vaildCheck()) {
       // this.props.history.push("/signin");
 
-      fetch("/user/signup", {
+      api("users", "POST", {
         name: name,
         email: email,
         password: password
       })
-        .then(response => {
-          if (response.status === 201) {
-            response.json();
-          } else if (response.status === 500) {
-            alert("왜 가입이 안될까요?");
-            console.log("signup 500::", response.statusText);
-          }
-        })
+        // .then(response => {
+        //   if (response.status === 201) {
+        //     response.json();
+        //   } else if (response.status === 500) {
+        //     alert("왜 가입이 안될까요?");
+        //     console.log("signup 500::", response.statusText);
+        //   }
+        // })
         .then(data => {
           console.log("/user/signup response::", data);
           this.props.history.push("/signin");
