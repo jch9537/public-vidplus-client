@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Title from "./Title";
 import VideoPlayer from "./VideoPlayer";
 import NoteList from "./NoteList";
-import Navigation from "../shared/Navigation";
 import "../../styles/Workspace.css";
 import { connect } from "react-redux";
 import { selectSpace } from "../../actions/creators";
@@ -46,22 +45,19 @@ class Workspace extends Component {
   render() {
     if (this.state.validPath) {
       return (
-        <Layout style={{ minHeight: "100vh" }}>
-          <Navigation defaultKey="2" />
-          <Layout style={{ padding: "24px 24px 24px 24px" }}>
-            <PageHeader></PageHeader>
-            <Content style={{ background: "white", padding: "16px 24px" }}>
-              <Title spaceName={this.props.match.params.spaceName} />
-              <Row gutter={[16, 16]}>
-                <Col span={12}>
-                  <VideoPlayer />
-                </Col>
-                <Col span={12}>
-                  <NoteList />
-                </Col>
-              </Row>
-            </Content>
-          </Layout>
+        <Layout style={{ padding: "24px 24px 24px 24px" }}>
+          <PageHeader></PageHeader>
+          <Content style={{ background: "white", padding: "16px 24px" }}>
+            <Title spaceName={this.props.match.params.spaceName} />
+            <Row gutter={[16, 16]}>
+              <Col span={12}>
+                <VideoPlayer />
+              </Col>
+              <Col span={12}>
+                <NoteList />
+              </Col>
+            </Row>
+          </Content>
         </Layout>
       );
     } else {
