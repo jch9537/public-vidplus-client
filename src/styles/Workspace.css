@@ -7,11 +7,10 @@
   padding: 20px;
 }
 
-.workspace-toggle-col {
-  overflow-x: hidden;
-  overflow-y: visible; /* so that workspace options can be seen */
-  padding-bottom: 250px; /* prevents scrollbar from appearing */
-  margin-bottom: -250px;
+@media only screen and (max-width: 500px) {
+  .workspace-toggle {
+    display: none;
+  }
 }
 
 .workspace-toggle {

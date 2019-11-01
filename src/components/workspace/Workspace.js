@@ -5,7 +5,8 @@ import NoteList from "./NoteList";
 import "../../styles/Workspace.css";
 import { connect } from "react-redux";
 import { selectSpace } from "../../actions/creators";
-import { Container, Row, Col } from "react-bootstrap";
+import { Layout, Row, Col, PageHeader } from "antd";
+const { Content } = Layout;
 
 // 들어오는 url (path)에 따라 redux의 current space를 업데이트
 function updateCurrSpace(path, props, initial = true) {
@@ -44,22 +45,20 @@ class Workspace extends Component {
   render() {
     if (this.state.validPath) {
       return (
-        <Container fluid={true}>
-          <Row className="main-row">
-            <div style={{ width: "150px", backgroundColor: "#44546A" }}></div>
-            <Col style={{ backgroundColor: "#F9F4FD" }}>
-              <Title spaceName={this.props.match.params.spaceName} />
-              <Row>
-                <Col>
-                  <VideoPlayer />
-                </Col>
-                <Col>
-                  <NoteList />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Container>
+        <Layout style={{ padding: "24px 24px 24px 24px" }}>
+          <PageHeader></PageHeader>
+          <Content style={{ background: "white", padding: "16px 24px" }}>
+            <Title spaceName={this.props.match.params.spaceName} />
+            <Row gutter={[16, 16]}>
+              <Col span={12}>
+                <VideoPlayer />
+              </Col>
+              <Col span={12}>
+                <NoteList />
+              </Col>
+            </Row>
+          </Content>
+        </Layout>
       );
     } else {
       return <div>404: Workspace Not Found</div>;

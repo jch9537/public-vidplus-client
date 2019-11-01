@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 // import { addSpaces } from "../../actions/creators";
+import { Layout } from "antd";
 import Table from "./Table";
 
 class Home extends Component {
   render() {
     const { spaces } = this.props;
     return (
-      <div>
+      <Layout>
         <Table spaces={spaces} />
-      </div>
+      </Layout>
     );
   }
 }
