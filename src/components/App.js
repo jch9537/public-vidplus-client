@@ -18,7 +18,8 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
+        {/*redirect on base URL or /spaces*/}
+        <Route exact path="/(|spaces)">
           <Redirect to="/home" />
         </Route>
         <Route path="/signup" component={Signup}></Route>
