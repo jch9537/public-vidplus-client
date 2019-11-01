@@ -8,12 +8,14 @@ import {
 } from "../actions/types";
 
 // 비동기 처리 (worker 함수)
-export function* addNotesAsync(action) {
-  yield put({ type: ADD_NOTES_ASYNC, notes: action.notes });
+export function* addNotesAsync() {
+  const existingNotes = yield call(api, "notes", "GET");
+  yield put({ type: ADD_NOTES_ASYNC, notes: existingNotes });
 }
 
 export function* addNoteAsync(action) {
-  yield put({ type: ADD_NOTE_ASYNC, note: action.note });
+  const newNote = yield call(api, "notes", "POST", action.note);
+  yield put({ type: ADD_NOTE_ASYNC, note: newNote });
 }
 
 export function* editNoteAsync(action) {
@@ -23,5 +25,7 @@ export function* editNoteAsync(action) {
 }
 
 export function* deleteNoteAsync(action) {
-  yield put({ type: DELETE_NOTE_ASYNC, id: action.id });
+  const id = action.id;
+  yield call(api, `notes/${id}`, "DELETE");
+  yield put({ type: DELETE_NOTE_ASYNC, id });
 }
