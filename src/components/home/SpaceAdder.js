@@ -10,7 +10,6 @@ class SpaceAdder extends Component {
     this.handleUrlChange = this.handleUrlChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      maxId: 1,
       url: "",
       name: ""
     };
@@ -62,13 +61,13 @@ class SpaceAdder extends Component {
   handleSubmit(e) {
     e.preventDefault();
     if (this.vaildCheck()) {
-      const { maxId, url, name } = this.state;
-      const space = { id: maxId + 1, url, name };
+      const { url, name } = this.state;
+      const space = { url, name };
 
       const { addSpace } = this.props;
       addSpace(space);
 
-      this.setState({ maxId: space.id, url: "", name: "" });
+      this.setState({ url: "", name: "" });
     }
   }
 
