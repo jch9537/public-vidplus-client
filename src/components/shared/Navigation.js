@@ -69,11 +69,7 @@ class Navigation extends Component {
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
         >
-          <Menu
-            theme="dark"
-            onSelect={this.onSelect}
-            defaultSelectedKeys={[itemKey]}
-          >
+          <Menu theme="dark" onSelect={this.onSelect} selectedKeys={[itemKey]}>
             <Menu.Item key="1" style={menuItemStyle} path="/home">
               <Icon type="home" style={this.state.iconStyle} />
               <span style={{ paddingLeft: "3px" }}>Home</span>
