@@ -1,31 +1,44 @@
 import React, { Component } from "react";
-import { changeTimestamp } from "../../actions/creators";
+import { changeTimestamp, editNote, deleteNote } from "../../actions/creators";
 import { connect } from "react-redux";
+import { Input, Button, Icon } from "antd";
+const { TextArea } = Input;
 
 class Note extends Component {
   constructor(props) {
     super(props);
-    this.changeTime = this.changeTime.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
   }
 
-  changeTime(time) {
-    this.props.changeTimestamp(time);
+  onChange(e) {
+    this.props.editNote({ ...this.props.note, content: e.target.value });
+  }
+
+  deleteNote() {
+    this.props.deleteNote(this.props.note.id);
   }
 
   render() {
+    const { note, changeTimestamp } = this.props;
     return (
-      <div>
-        <button onClick={() => this.changeTime(this.props.note.timestamp)}>
-          {this.props.note.timestamp}
-        </button>
-        {this.props.note.content}
+      <div className="note-div">
+        <a href="#" onClick={() => changeTimestamp(note.timestamp)}>
+          {note.timestamp}
+        </a>
+        <TextArea onChange={this.onChange} value={note.content} autoSize />
+        <Button type="primary" shape="circle" onClick={this.deleteNote}>
+          <Icon type="delete" style={{ marginLeft: "7.5px" }}></Icon>
+        </Button>
       </div>
     );
   }
 }
 
 const matchDispatchToProps = dispatch => ({
-  changeTimestamp: time => dispatch(changeTimestamp(time))
+  changeTimestamp: time => dispatch(changeTimestamp(time)),
+  deleteNote: id => dispatch(deleteNote(id)),
+  editNote: note => dispatch(editNote(note))
 });
 Note = connect(
   null,

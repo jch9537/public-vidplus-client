@@ -8,6 +8,11 @@ class NoteList extends Component {
     super(props);
     const currSpace = props.spaces.filter(space => space.current)[0];
     const notes = props.notes.filter(notes => notes.space_id === currSpace.id);
+    // Sort notes in chronological order
+    notes.sort(
+      (a, b) =>
+        a.timestamp.split(":").join("") - b.timestamp.split(":").join("")
+    );
     this.state = { currSpace, notes };
   }
 
@@ -19,6 +24,11 @@ class NoteList extends Component {
     ) {
       const notes = this.props.notes.filter(
         notes => notes.space_id === currSpace.id
+      );
+      // Sort notes in chronological order
+      notes.sort(
+        (a, b) =>
+          a.timestamp.split(":").join("") - b.timestamp.split(":").join("")
       );
       this.setState({ currSpace, notes });
     }

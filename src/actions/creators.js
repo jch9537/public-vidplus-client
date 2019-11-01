@@ -40,8 +40,8 @@ export function addNote(note) {
   return { type: ADD_NOTE, note };
 }
 
-export function editNote(note, id) {
-  return { type: EDIT_NOTE, note, id };
+export function editNote(note) {
+  return { type: EDIT_NOTE, note };
 }
 
 export function deleteNote(id) {

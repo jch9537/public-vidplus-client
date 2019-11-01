@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { Row, Col, Dropdown } from "react-bootstrap";
+const { Item, Menu, Toggle } = Dropdown;
 
 class Title extends Component {
   constructor(props) {
@@ -16,11 +18,14 @@ class Title extends Component {
     }
   }
 
-  onSpaceChange(e) {
-    this.setState({
-      shouldRedirect: true,
-      path: e.target.value
-    });
+  onSpaceChange(spaceName) {
+    // Only when a different space has been selected
+    if (spaceName !== this.props.spaceName) {
+      this.setState({
+        shouldRedirect: true,
+        path: spaceName
+      });
+    }
   }
 
   render() {
@@ -29,20 +34,31 @@ class Title extends Component {
       return <Redirect to={`/spaces/${this.state.path}`} />;
     } else {
       return (
-        <div>
-          Workspace:{" "}
-          <select onChange={this.onSpaceChange}>
-            {this.props.spaces.map(space => (
-              <option
-                value={space.name}
-                key={space.id}
-                selected={space.current}
-              >
-                {space.name}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Row className="workspace-title">
+          <Col xs={2.5}>
+            <h2 style={{ display: "inline", fontWeight: 400 }}>
+              Workspace Name:
+            </h2>
+          </Col>
+          <Col className="workspace-toggle-col">
+            <Dropdown style={{ display: "inline" }}>
+              <Toggle className="workspace-toggle">
+                {this.props.spaceName}
+              </Toggle>
+              <Menu>
+                {this.props.spaces.map((space, i) => (
+                  <Item
+                    eventKey={space.name}
+                    key={i}
+                    onSelect={this.onSpaceChange}
+                  >
+                    {space.name}
+                  </Item>
+                ))}
+              </Menu>
+            </Dropdown>
+          </Col>
+        </Row>
       );
     }
   }

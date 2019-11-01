@@ -5,10 +5,10 @@ export default function notes(state = [], action) {
     case ADD_NOTES:
       return action.notes;
     case ADD_NOTE:
-      return [...state, action.note];
+      return [...state, { ...action.note, current: false }];
     case EDIT_NOTE:
       return state.map(note => {
-        if (note.id === action.id) {
+        if (note.id === action.note.id) {
           return action.note;
         } else {
           return note;
