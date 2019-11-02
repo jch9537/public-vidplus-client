@@ -13,13 +13,13 @@ class Title extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.spaceName !== this.props.spaceName) {
-      // Right after redirection
+      // Right after redirection to a new space
       this.setState({ shouldRedirect: false });
     }
   }
 
   onSpaceChange(spaceName) {
-    // Only when a different space has been selected
+    // Redirect when a different space has been selected
     if (spaceName !== this.props.spaceName) {
       this.setState({
         shouldRedirect: true,
@@ -30,7 +30,7 @@ class Title extends Component {
 
   render() {
     if (this.state.shouldRedirect) {
-      // Browser automatically takes care of URI encoding
+      // Should redirect to the new given path
       return <Redirect to={`/spaces/${this.state.path}`} />;
     } else {
       return (
