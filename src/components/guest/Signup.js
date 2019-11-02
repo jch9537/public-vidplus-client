@@ -61,25 +61,35 @@ class Signup extends Component {
 
   signUp() {
     const { name, email, password } = this.state;
+
     if (this.vaildCheck()) {
       // this.props.history.push("/signin");
 
-      api("users", "POST", {
+      api("user/signup", "POST", {
         name: name,
         email: email,
         password: password
       })
-        // .then(response => {
-        //   if (response.status === 201) {
-        //     response.json();
-        //   } else if (response.status === 500) {
-        //     alert("왜 가입이 안될까요?");
-        //     console.log("signup 500::", response.statusText);
-        //   }
-        // })
         .then(data => {
           console.log("/user/signup response::", data);
-          this.props.history.push("/signin");
+          if (data.error) {
+            const { status, message } = data.error;
+
+            const txtWarning = document.getElementById("txtWarning");
+            txtWarning.style.display = "none";
+            if (status === 400) {
+              alert(message);
+            } else if (status === 409) {
+              txtWarning.style.display = "block";
+              txtWarning.innerHTML = message;
+            } else if (status === 500) {
+              txtWarning.style.display = "block";
+              txtWarning.innerHTML = message;
+              alert("고객센터로 문의 바랍니다.");
+            }
+          } else {
+            this.props.history.push("/signin");
+          }
         })
         .catch(error => console.log(error));
     }
