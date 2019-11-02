@@ -18,6 +18,9 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
+store.dispatch({ type: "ADD_SPACES" });
+store.dispatch({ type: "ADD_NOTES" });
+
 ReactDOM.render(
   <Provider store={store}>
     <App />
