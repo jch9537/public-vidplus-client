@@ -35,7 +35,7 @@ export function* editSpaceAsync(action) {
     yield put({
       type: EDIT_SPACE_ASYNC,
       name: editedSpace.name,
-      id: editedSpace.id
+      id: id
     });
   } catch (error) {
     yield put({ type: ADD_ERROR, error });
@@ -45,8 +45,8 @@ export function* editSpaceAsync(action) {
 export function* deleteSpaceAsync(action) {
   try {
     const id = action.id;
-    const deletedSpace = yield call(api, `spaces/${id}`, "DELETE");
-    yield put({ type: DELETE_SPACE_ASYNC, id: deletedSpace.id });
+    yield call(api, `spaces/${id}`, "DELETE");
+    yield put({ type: DELETE_SPACE_ASYNC, id: id });
   } catch (error) {
     yield put({ type: ADD_ERROR, error });
   }
@@ -55,8 +55,8 @@ export function* deleteSpaceAsync(action) {
 export function* selectSpaceAsync(action) {
   try {
     const id = action.id;
-    const selectedSpace = yield call(api, `spaces/${id}`, "GET");
-    yield put({ type: SELECT_SPACE_ASYNC, id: selectedSpace.id });
+    yield call(api, `spaces/${id}`, "GET");
+    yield put({ type: SELECT_SPACE_ASYNC, id: id });
   } catch (error) {
     yield put({ type: ADD_ERROR, error });
   }
