@@ -15,15 +15,12 @@ class Note extends Component {
     this.state = { content: props.note.content };
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.currSpace !== this.props.currSpace) {
-      /* Update content in note's state whenever the workspace changes:
-      Necessary because we are passing this.state.content to TextArea */
-      this.setState({ content: this.props.note.content });
-    }
-  }
+  // *Note: componentDidUpdate when switching current space is not needed, b/c the same
+  // Note component will never be rendered for diff spaces (as key is a unique note id)
 
   onChange(e) {
+    // need to set state separately instead of directly referencing redux
+    // store in TextArea because of the bug mentioned in constructor()
     this.setState({ content: e.target.value });
     this.props.editNote({ ...this.props.note, content: e.target.value });
   }

@@ -8,8 +8,7 @@ class NoteInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // currspace might not exist b/c it is selected asynchronously
-      space_id: props.currSpace ? props.currSpace.id : "",
+      space_id: props.currSpace.id,
       content: ""
     };
     this.onChange = this.onChange.bind(this);
@@ -21,13 +20,13 @@ class NoteInput extends Component {
       // Change the id of the NoteInput when currSpace changes
       this.setState({ space_id: this.props.currSpace.id });
     } else if (prevProps.notes.length !== this.props.notes.length) {
-      // After async fetch has happened and notes from database have
-      // been added to store, or after new note has been entered
+      // After new note has been updated in db & entered in store
       this.setState({ content: "" });
     }
   }
 
   onChange(e) {
+    // Change the content inside the state
     this.setState({ content: e.target.value });
   }
 
@@ -59,7 +58,6 @@ class NoteInput extends Component {
 }
 
 const matchStateToProps = state => ({
-  spaces: state.spaces,
   notes: state.notes,
   currTime: state.currTime
 });
