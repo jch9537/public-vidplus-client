@@ -10,7 +10,7 @@ export default function notes(state = [], action) {
     case ADD_NOTES_ASYNC:
       return action.notes;
     case ADD_NOTE_ASYNC:
-      return [...state, { ...action.note, current: false }];
+      return [...state, { ...action.note }];
     case EDIT_NOTE_ASYNC:
       return state.map(note => {
         if (note.id === action.note.id) {

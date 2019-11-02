@@ -48,8 +48,20 @@ class Navigation extends Component {
     }
   }
 
-  onSelect({ item }) {
-    this.setState({ redirect: { awaiting: true, path: item.props.path } });
+  onSelect({ item, key }) {
+    if (key === "2" && this.props.spaces.length === 0) {
+      // Do not allow redirect to workspace page
+      alert("You have no active workspaces.");
+    } else if (key === "2") {
+      this.setState({
+        redirect: {
+          awaiting: true,
+          path: `/spaces/${this.props.spaces[0].name}`
+        }
+      });
+    } else {
+      this.setState({ redirect: { awaiting: true, path: item.props.path } });
+    }
   }
 
   render() {
@@ -74,11 +86,7 @@ class Navigation extends Component {
               <Icon type="home" style={this.state.iconStyle} />
               <span style={{ paddingLeft: "3px" }}>Home</span>
             </Menu.Item>
-            <Menu.Item
-              key="2"
-              style={menuItemStyle}
-              path={`/spaces/${this.props.spaces[0].name}`}
-            >
+            <Menu.Item key="2" style={menuItemStyle}>
               <Icon type="youtube" style={this.state.iconStyle} />
               <span style={{ paddingLeft: "3px" }}>Workspace</span>
             </Menu.Item>

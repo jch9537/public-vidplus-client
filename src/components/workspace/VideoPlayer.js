@@ -1,21 +1,22 @@
 import React, { Component } from "react";
 import { changeTimestamp, changeCurrTime } from "../../actions/creators";
 import { connect } from "react-redux";
-import { ResponsiveEmbed } from "react-bootstrap";
-import YTPlayer from "yt-player";
+import ReactPlayer from "react-player";
 
 class VideoPlayer extends Component {
   constructor(props) {
     super(props);
     const currSpace = this.props.spaces.filter(space => space.current)[0];
     this.state = { currSpace };
+    this.onProgress = this.onProgress.bind(this);
+    // Create a reference to the ReactPlayer component (for seekTo)
+    this.player = React.createRef();
   }
 
   componentDidUpdate(prevProps, prevState) {
     const currSpace = this.props.spaces.filter(space => space.current)[0];
     if (prevState.currSpace !== currSpace) {
-      const videoId = currSpace.url.split("=")[1];
-      this.setState({ currSpace }, () => this.state.player.load(videoId));
+      this.setState({ currSpace });
     } else if (this.props.timestamp !== null) {
       const time = this.props.timestamp
         .split(":")
@@ -24,29 +25,29 @@ class VideoPlayer extends Component {
             i === 0 ? (acc += parseInt(val) * 60) : (acc += parseInt(val)),
           0
         );
-      this.state.player.seek(time); // move to specified timestamp
+      this.player.current.seekTo(time); // move to specified timestamp
       this.props.changeTimestamp(null);
     }
   }
 
-  componentDidMount() {
-    const videoId = this.state.currSpace.url.split("=")[1];
-    this.setState(
-      { player: new YTPlayer(".player", { width: "", height: "" }) },
-      () => {
-        this.state.player.load(videoId);
-        this.state.player.on("timeupdate", seconds =>
-          this.props.changeCurrTime(seconds)
-        );
-      }
-    );
+  onProgress({ playedSeconds }) {
+    this.props.changeCurrTime(playedSeconds);
   }
 
   render() {
+    // Wrap in div with 16:9 aspect ratio
     return (
-      <ResponsiveEmbed aspectRatio="16by9">
-        <div className="player"></div>
-      </ResponsiveEmbed>
+      <div style={{ position: "relative", paddingBottom: "56.25%" }}>
+        <ReactPlayer
+          ref={this.player}
+          url={this.state.currSpace.url}
+          onProgress={this.onProgress}
+          width="100%"
+          height="100%"
+          style={{ position: "absolute", top: 0, left: 0 }}
+          playing
+        />
+      </div>
     );
   }
 }

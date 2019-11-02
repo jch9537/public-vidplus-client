@@ -38,7 +38,7 @@ class NoteList extends Component {
     return (
       <div>
         {this.state.notes.map((note, i) => (
-          <Note note={note} key={i} />
+          <Note note={note} currSpace={this.state.currSpace} key={i} />
         ))}
         <NoteInput currSpace={this.state.currSpace} />
       </div>
