@@ -15,7 +15,7 @@ export function* addSpacesAsync(action) {
 }
 
 export function* addSpaceAsync(action) {
-  const getSpace = yield call(api, "spaces", action.space);
+  const getSpace = yield call(api, "spaces", "PUT", action.space);
   yield put({ type: ADD_SPACE_ASYNC, space: getSpace });
 }
 
