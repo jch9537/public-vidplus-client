@@ -8,15 +8,17 @@ import {
 import "../styles/App.css";
 import "antd/dist/antd.css";
 import { Layout } from "antd";
+import { connect } from "react-redux";
 import Workspace from "./workspace/Workspace";
 import Signin from "./guest/Signin";
 import Signup from "./guest/Signup";
 import Home from "./home/Home";
 import Navigation from "./shared/Navigation";
 
-function App() {
+let App = function(props) {
   return (
     <Router>
+      {props.errors.map(error => alert(error.message))}
       <Switch>
         {/*redirect on base URL or /spaces*/}
         <Route exact path="/(|spaces)">
@@ -40,6 +42,10 @@ function App() {
       </Switch>
     </Router>
   );
-}
+};
 
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+App = connect(mapStateToProps)(App);
 export default App;
