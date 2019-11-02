@@ -11,15 +11,19 @@ const { Content } = Layout;
 // 들어오는 url (path)에 따라 redux의 current space를 업데이트
 function updateCurrSpace(path, props, initial = true) {
   const currSpace = props.spaces.filter(space => space.name === path)[0];
+
   if (currSpace) {
-    // path에 해당되는 space가 존재한다
+    // path에 해당되는 space가 존재한다: no need to return 404
     if (initial) {
+      // constructor 안에서 호출됐으면, 바로 할당
       this.state = { validPath: true };
     } else {
+      // use setState otherwise
       this.setState({ validPath: true });
     }
-    props.selectSpace(currSpace.id);
+    props.selectSpace(currSpace.id); // select the current space
   } else {
+    // return 404 Not Found
     initial
       ? (this.state = { validPath: false })
       : this.setState({ validPath: false });
@@ -29,15 +33,19 @@ function updateCurrSpace(path, props, initial = true) {
 class Workspace extends Component {
   constructor(props) {
     super(props);
-    // URI is decoded before coming into spaceName
     const { spaceName } = this.props.match.params;
+    // Update the current space (or use {validPath: false} to return 404 page)
     updateCurrSpace.call(this, spaceName, props);
   }
 
   componentDidUpdate(prevProps) {
-    // On url redirect or reload (to different workspace)
     const { spaceName } = this.props.match.params;
-    if (prevProps.match.params.spaceName !== spaceName) {
+    const updateNeeded =
+      prevProps.match.params.spaceName !== spaceName ||
+      prevProps.spaces.length !== this.props.spaces.length;
+    // First conditional determines whether the current space (url) has been changed
+    // Second conditional handles async fetching (b/c props.spaces is initially an empty arr)
+    if (updateNeeded) {
       updateCurrSpace.call(this, spaceName, this.props, false);
     }
   }
@@ -61,6 +69,7 @@ class Workspace extends Component {
         </Layout>
       );
     } else {
+      // The URL does not correspond to a workspace
       return <div>404: Workspace Not Found</div>;
     }
   }
