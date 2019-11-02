@@ -22,6 +22,7 @@ function updateCurrSpace(path, props, initial = true) {
       this.setState({ validPath: true });
     }
     props.selectSpace(currSpace.id); // select the current space
+    // 비동기로 처리되는 함수여서 currSpace의 current속성이 바로 true가 안될수도 있다
   } else {
     // return 404 Not Found
     initial
