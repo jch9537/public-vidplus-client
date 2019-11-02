@@ -43,8 +43,10 @@ class NoteList extends Component {
   render() {
     return (
       <div>
-        {this.state.notes.map((note, i) => (
-          <Note note={note} currSpace={this.state.currSpace} key={i} />
+        {// If key!==note.id, the note going into each Note component will change on diff updates,
+        // giving unmatching state.content / timestamp values to the Note component
+        this.state.notes.map(note => (
+          <Note note={note} currSpace={this.state.currSpace} key={note.id} />
         ))}
         <NoteInput currSpace={this.state.currSpace} />
       </div>
