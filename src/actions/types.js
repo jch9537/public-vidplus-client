@@ -22,3 +22,6 @@ export const ADD_NOTES_ASYNC = "ADD_NOTES_ASYNC";
 export const ADD_NOTE_ASYNC = "ADD_NOTE_ASYNC";
 export const EDIT_NOTE_ASYNC = "EDIT_NOTE_ASYNC";
 export const DELETE_NOTE_ASYNC = "DELETE_NOTE_ASYNC";
+
+export const ADD_ERROR = "ADD_ERROR";
+export const REMOVE_ERROR = "REMOVE_ERROR";
