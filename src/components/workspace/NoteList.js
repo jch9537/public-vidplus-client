@@ -7,7 +7,10 @@ class NoteList extends Component {
   constructor(props) {
     super(props);
     const currSpace = props.spaces.filter(space => space.current)[0];
-    const notes = props.notes.filter(notes => notes.space_id === currSpace.id);
+    // 비동기 api호출 때문에 selectSpace할 떄 current 속성이 false이거나 존재하지 않을 수 있다
+    const notes = currSpace
+      ? props.notes.filter(notes => notes.space_id === currSpace.id)
+      : [];
     // Sort notes in chronological order
     notes.sort(
       (a, b) =>
@@ -18,12 +21,15 @@ class NoteList extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const currSpace = this.props.spaces.filter(space => space.current)[0];
+    // 비동기로 notes를 가져올 당시에, componentDidUpdate가 실행된다 (currSpace가 select
+    // 되기도 전에). 현재 스페이스에 따라 노트를 업데이트할려면, 우선 currSpace가 존재해야 된다.
     if (
-      prevState.currSpace !== currSpace ||
-      prevProps.notes !== this.props.notes
+      currSpace &&
+      (prevState.currSpace !== currSpace ||
+        prevProps.notes !== this.props.notes)
     ) {
       const notes = this.props.notes.filter(
-        notes => notes.space_id === currSpace.id
+        note => note.space_id === currSpace.id
       );
       // Sort notes in chronological order
       notes.sort(
