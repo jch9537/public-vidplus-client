@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import api from "../../api";
 
 class Signin extends Component {
   constructor(props) {
@@ -24,24 +25,32 @@ class Signin extends Component {
       alert("비밀번호를 입력해주세요");
       return;
     }
-    // this.props.history.push("/home");
-    fetch("/user/signin", {
+
+    api("user/signin", {
       email: this.state.email,
       password: this.state.password
     })
-      .then(response => {
-        if (response.status === 200) {
-          response.json();
-        } else if (response.status === 500) {
-          alert("왜 로그인이 안될까요?" + response.statusText);
-          console.log("signup 500::", response.statusText);
-        }
-      })
       .then(data => {
         console.log("/signin : data::", data);
         this.props.history.push("/home");
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        const { status, message } = error;
+
+        const txtWarning = document.getElementById("txtWarning");
+        txtWarning.style.display = "none";
+
+        if (status === 400) {
+          alert(message);
+        } else if (status === 401) {
+          txtWarning.style.display = "block";
+          txtWarning.innerHTML = message;
+        } else if (status === 500) {
+          txtWarning.style.display = "block";
+          txtWarning.innerHTML = message;
+          alert("고객센터로 문의 바랍니다.");
+        }
+      });
   }
 
   handleEmailChange(e) {
@@ -78,6 +87,7 @@ class Signin extends Component {
           <button type="button" onClick={this.signIn}>
             Sign in
           </button>
+          <p id="txtWarning"></p>
         </form>
         <div>
           <Link to="/signup">{"Signup"}</Link>

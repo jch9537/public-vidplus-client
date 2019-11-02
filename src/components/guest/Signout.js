@@ -1,22 +1,23 @@
 import React, { Component } from "react";
+import api from "../../api";
 
 class SignOut extends Component {
   signOut() {
-    fetch("/user/signout")
-      .then(response => {
-        if (response.status === 200) {
-          response.json();
-        } else if (response.status === 500) {
-          alert("왜 로그아웃이 안될까요?" + response.statusText);
-          console.log("signup 500::", response.statusText);
-        }
-      })
+    api("user/signout")
       .then(data => {
         console.log("/signout : data::", data);
-        // console.log(this.props, this.props.history);
         this.props.history.push("/signin");
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        const { status, message } = error;
+
+        if (status === 406) {
+          alert(message);
+          this.props.history.push("/signin");
+        } else if (status === 500) {
+          alert(message + ". 고객센터로 문의 바랍니다.");
+        }
+      });
   }
 
   render() {
