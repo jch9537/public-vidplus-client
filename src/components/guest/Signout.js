@@ -6,21 +6,18 @@ class SignOut extends Component {
     api("user/signout")
       .then(data => {
         console.log("/signout : data::", data);
-        console.log("/signin : data::", data);
-        if (data.error) {
-          const { status, message } = data.error;
-
-          if (status === 406) {
-            alert(message);
-            this.props.history.push("/signin");
-          } else if (status === 500) {
-            alert(message + ". 고객센터로 문의 바랍니다.");
-          }
-        } else {
-          this.props.history.push("/signin");
-        }
+        this.props.history.push("/signin");
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        const { status, message } = error;
+
+        if (status === 406) {
+          alert(message);
+          this.props.history.push("/signin");
+        } else if (status === 500) {
+          alert(message + ". 고객센터로 문의 바랍니다.");
+        }
+      });
   }
 
   render() {

@@ -32,27 +32,25 @@ class Signin extends Component {
     })
       .then(data => {
         console.log("/signin : data::", data);
-        if (data.error) {
-          const { status, message } = data.error;
-
-          const txtWarning = document.getElementById("txtWarning");
-          txtWarning.style.display = "none";
-
-          if (status === 400) {
-            alert(message);
-          } else if (status === 401) {
-            txtWarning.style.display = "block";
-            txtWarning.innerHTML = message;
-          } else if (status === 500) {
-            txtWarning.style.display = "block";
-            txtWarning.innerHTML = message;
-            alert("고객센터로 문의 바랍니다.");
-          }
-        } else {
-          this.props.history.push("/home");
-        }
+        this.props.history.push("/home");
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        const { status, message } = error;
+
+        const txtWarning = document.getElementById("txtWarning");
+        txtWarning.style.display = "none";
+
+        if (status === 400) {
+          alert(message);
+        } else if (status === 401) {
+          txtWarning.style.display = "block";
+          txtWarning.innerHTML = message;
+        } else if (status === 500) {
+          txtWarning.style.display = "block";
+          txtWarning.innerHTML = message;
+          alert("고객센터로 문의 바랍니다.");
+        }
+      });
   }
 
   handleEmailChange(e) {

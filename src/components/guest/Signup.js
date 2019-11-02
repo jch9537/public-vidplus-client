@@ -63,8 +63,6 @@ class Signup extends Component {
     const { name, email, password } = this.state;
 
     if (this.vaildCheck()) {
-      // this.props.history.push("/signin");
-
       api("user/signup", "POST", {
         name: name,
         email: email,
@@ -72,26 +70,25 @@ class Signup extends Component {
       })
         .then(data => {
           console.log("/user/signup response::", data);
-          if (data.error) {
-            const { status, message } = data.error;
-
-            const txtWarning = document.getElementById("txtWarning");
-            txtWarning.style.display = "none";
-            if (status === 400) {
-              alert(message);
-            } else if (status === 409) {
-              txtWarning.style.display = "block";
-              txtWarning.innerHTML = message;
-            } else if (status === 500) {
-              txtWarning.style.display = "block";
-              txtWarning.innerHTML = message;
-              alert("고객센터로 문의 바랍니다.");
-            }
-          } else {
-            this.props.history.push("/signin");
-          }
+          this.props.history.push("/signin");
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          const { status, message } = error;
+
+          const txtWarning = document.getElementById("txtWarning");
+          txtWarning.style.display = "none";
+
+          if (status === 400) {
+            alert(message);
+          } else if (status === 409) {
+            txtWarning.style.display = "block";
+            txtWarning.innerHTML = message;
+          } else if (status === 500) {
+            txtWarning.style.display = "block";
+            txtWarning.innerHTML = message;
+            alert("고객센터로 문의 바랍니다.");
+          }
+        });
     }
   }
   handleNameChange(e) {
