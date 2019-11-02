@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import appReducer from "./reducers";
 import logger from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
-import createSagaMiddleware from "redux-saga"; // 희정님이 올리셨는지 확인
+import createSagaMiddleware from "redux-saga"; // 제가 올렸을리가요 :D
 import rootSaga from "./sagas/watchers";
 
 const sagaMiddleware = createSagaMiddleware();

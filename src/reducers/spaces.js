@@ -5,20 +5,8 @@ import {
   DELETE_SPACE_ASYNC,
   SELECT_SPACE_ASYNC
 } from "../actions/types";
-const initialState = [
-  {
-    id: 0,
-    url: "https://www.youtube.com/watch?v=568g8hxJJp4",
-    name: "funfunfunction_async"
-  },
-  {
-    id: 1,
-    url: "https://www.youtube.com/watch?v=2d7s3spWAzo",
-    name: "funfunfunction_promise"
-  }
-];
 
-export default function spaces(state = initialState, action) {
+export default function spaces(state = [], action) {
   switch (action.type) {
     case ADD_SPACES_ASYNC:
       return action.spaces;

@@ -10,7 +10,6 @@ class SpaceAdder extends Component {
     this.handleUrlChange = this.handleUrlChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      maxId: 2,
       url: "",
       name: ""
     };
@@ -22,14 +21,14 @@ class SpaceAdder extends Component {
     const txtWarning = document.getElementById("txtWarning");
     txtWarning.style.display = "none";
 
-    const nameReg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|._\-|*]+$/g;
+    const nameReg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|._\-|*]{2,30}$/g;
     if (name === "") {
       txtWarning.style.display = "block";
       txtWarning.innerHTML = "Workspace 이름을 입력해주세요";
       result = false;
     } else if (!nameReg.test(name)) {
       txtWarning.style.display = "block";
-      txtWarning.innerHTML = "빈칸 없이 텍스트로 입력해주세요";
+      txtWarning.innerHTML = "2자 이상 빈칸 없이 텍스트로 입력해주세요";
       this.setState({ name: "" });
       result = false;
     }
@@ -62,13 +61,13 @@ class SpaceAdder extends Component {
   handleSubmit(e) {
     e.preventDefault();
     if (this.vaildCheck()) {
-      const { maxId, url, name } = this.state;
-      const space = { id: maxId + 1, url, name };
+      const { url, name } = this.state;
+      const space = { url, name };
 
       const { addSpace } = this.props;
       addSpace(space);
 
-      this.setState({ maxId: space.id, url: "", name: "" });
+      this.setState({ url: "", name: "" });
     }
   }
 

@@ -10,21 +10,33 @@ import {
 
 // 비동기 처리 (worker 함수)
 export function* addSpacesAsync(action) {
-  yield put({ type: ADD_SPACES_ASYNC, spaces: action.spaces });
+  const getSpaces = yield call(api, "spaces", "GET");
+  yield put({ type: ADD_SPACES_ASYNC, spaces: getSpaces });
 }
 
 export function* addSpaceAsync(action) {
-  yield put({ type: ADD_SPACE_ASYNC, space: action.space });
+  const getSpace = yield call(api, "spaces", action.space);
+  yield put({ type: ADD_SPACE_ASYNC, space: getSpace });
 }
 
 export function* editSpaceAsync(action) {
-  yield put({ type: EDIT_SPACE_ASYNC, id: action.id });
+  const id = action.id;
+  const editedSpace = yield call(api, `spaces/${id}`, "PUT", action.name);
+  yield put({
+    type: EDIT_SPACE_ASYNC,
+    name: editedSpace.name,
+    id: editedSpace.id
+  });
 }
 
 export function* deleteSpaceAsync(action) {
-  yield put({ type: DELETE_SPACE_ASYNC, id: action.id });
+  const id = action.id;
+  const deletedSpace = yield call(api, `space/${id}`, "DELETE");
+  yield put({ type: DELETE_SPACE_ASYNC, id: deletedSpace.id });
 }
 
 export function* selectSpaceAsync(action) {
-  yield put({ type: SELECT_SPACE_ASYNC, id: action.id });
+  const id = action.id;
+  const selectedSpace = yield call(api, `space/${id}`, "GET");
+  yield put({ type: SELECT_SPACE_ASYNC, id: selectedSpace.id });
 }
