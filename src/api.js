@@ -8,6 +8,7 @@ export default function api(url, method, body) {
     headers: {
       "Content-Type": "application/json"
     },
+    credentials: "include",
     body: JSON.stringify(body)
   })
     .then(res => res.json())
