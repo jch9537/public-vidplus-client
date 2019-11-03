@@ -26,10 +26,7 @@ class Signin extends Component {
       return;
     }
 
-    api("user/signin", {
-      email: this.state.email,
-      password: this.state.password
-    })
+    api("user/signin", "POST", { email, password })
       .then(data => {
         console.log("/signin : data::", data);
         this.props.history.push("/home");

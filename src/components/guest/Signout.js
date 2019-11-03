@@ -3,7 +3,7 @@ import api from "../../api";
 
 class SignOut extends Component {
   signOut() {
-    api("user/signout")
+    api("user/signout", "POST")
       .then(data => {
         console.log("/signout : data::", data);
         this.props.history.push("/signin");
