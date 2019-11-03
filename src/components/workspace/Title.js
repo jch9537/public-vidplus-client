@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { Row, Col, Dropdown } from "react-bootstrap";
-const { Item, Menu, Toggle } = Dropdown;
+import { Typography, Select, Col, PageHeader } from "antd";
+import { Link } from "react-router-dom";
+const { Option } = Select;
+const Heading = Typography.Title;
 
 class Title extends Component {
   constructor(props) {
@@ -33,32 +35,33 @@ class Title extends Component {
       // Should redirect to the new given path
       return <Redirect to={`/spaces/${this.state.path}`} />;
     } else {
+      const routes = [
+        { path: "/home", breadcrumbName: "Home" },
+        { breadcrumbName: "Workspaces" }
+      ];
+      const itemRender = route => (
+        <Link to={route.path}>{route.breadcrumbName}</Link>
+      );
+
       return (
-        <Row className="workspace-title">
-          <Col xs={2.5}>
-            <h2 style={{ display: "inline-block", fontWeight: 400 }}>
-              Workspace:
-            </h2>
+        <PageHeader breadcrumb={{ itemRender, routes }}>
+          <Col style={{ display: "inline-block", width: "170px" }}>
+            <Heading level={2}>Workspace:</Heading>
           </Col>
-          <Col className="workspace-toggle-col">
-            <Dropdown style={{ display: "inline" }}>
-              <Toggle className="workspace-toggle">
-                {this.props.spaceName}
-              </Toggle>
-              <Menu>
-                {this.props.spaces.map((space, i) => (
-                  <Item
-                    eventKey={space.name}
-                    key={i}
-                    onSelect={this.onSpaceChange}
-                  >
-                    {space.name}
-                  </Item>
-                ))}
-              </Menu>
-            </Dropdown>
+          <Col className="workspace-select-div">
+            <Select
+              value={this.props.spaceName}
+              onSelect={this.onSpaceChange}
+              style={{ width: "100%" }}
+            >
+              {this.props.spaces.map(space => (
+                <Option value={space.name} key={space.id}>
+                  {space.name}
+                </Option>
+              ))}
+            </Select>
           </Col>
-        </Row>
+        </PageHeader>
       );
     }
   }
