@@ -34,9 +34,14 @@ class NoteInput extends Component {
     if (e.key === "Enter" && !e.shiftKey) {
       const currTime = this.props.currTime;
       // prepending zero to single digit seconds (match timestamp format)
-      const timestamp = `${Math.floor(currTime / 60)}:${(
-        "0" + Math.round(currTime % 60)
-      ).slice(-2)}`;
+      let minutes = Math.floor(currTime / 60);
+      let hours;
+      if (minutes >= 60) {
+        hours = Math.floor(minutes / 60);
+        minutes = ("0" + (minutes % 60)).slice(-2);
+      }
+      let seconds = ("0" + Math.round(currTime % 60)).slice(-2);
+      const timestamp = `${hours ? hours + ":" : ""}${minutes}:${seconds}`;
       const content = this.state.content.trim(); // remove \n from final enter
       // addNote (id field not needed b/c response from db will automatically create it)
       this.props.addNote({ ...this.state, content, timestamp });
