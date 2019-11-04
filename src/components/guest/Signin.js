@@ -10,7 +10,8 @@ class Signin extends Component {
     this.handlePWChange = this.handlePWChange.bind(this);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      txtWarning: ""
     };
   }
 
@@ -29,22 +30,17 @@ class Signin extends Component {
     api("user/signin", "POST", { email, password })
       .then(data => {
         console.log("/signin : data::", data);
-        this.props.history.push("/home");
+        this.props.changAuthState(() => this.props.history.push("/home"));
       })
       .catch(error => {
         const { status, message } = error;
 
-        const txtWarning = document.getElementById("txtWarning");
-        txtWarning.style.display = "none";
-
         if (status === 400) {
           alert(message);
         } else if (status === 401) {
-          txtWarning.style.display = "block";
-          txtWarning.innerHTML = message;
+          this.setState({ txtWarning: message });
         } else if (status === 500) {
-          txtWarning.style.display = "block";
-          txtWarning.innerHTML = message;
+          this.setState({ txtWarning: message });
           alert("고객센터로 문의 바랍니다.");
         }
       });
@@ -60,7 +56,9 @@ class Signin extends Component {
   render() {
     // const { from } = location.state || { from: { pathname: "/" } };
     // if (isSignedIn) return <Redirect to={from} />;
-
+    if (this.props.authenticated) {
+      this.props.history.push("/home");
+    }
     return (
       <div>
         <form className="form-signin">
