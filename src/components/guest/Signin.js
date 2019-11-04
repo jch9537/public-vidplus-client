@@ -8,9 +8,11 @@ class Signin extends Component {
     this.signIn = this.signIn.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePWChange = this.handlePWChange.bind(this);
+    this.googleSignIn = this.googleSignIn.bind(this);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      txtWarning: ""
     };
   }
 
@@ -29,22 +31,17 @@ class Signin extends Component {
     api("user/signin", "POST", { email, password })
       .then(data => {
         console.log("/signin : data::", data);
-        this.props.history.push("/home");
+        this.props.changAuthState(() => this.props.history.push("/home"));
       })
       .catch(error => {
         const { status, message } = error;
 
-        const txtWarning = document.getElementById("txtWarning");
-        txtWarning.style.display = "none";
-
         if (status === 400) {
           alert(message);
         } else if (status === 401) {
-          txtWarning.style.display = "block";
-          txtWarning.innerHTML = message;
+          this.setState({ txtWarning: message });
         } else if (status === 500) {
-          txtWarning.style.display = "block";
-          txtWarning.innerHTML = message;
+          this.setState({ txtWarning: message });
           alert("고객센터로 문의 바랍니다.");
         }
       });
@@ -57,10 +54,32 @@ class Signin extends Component {
     this.setState({ password: e.target.value });
   }
 
+  googleSignIn() {
+    api("google/signin", "POST")
+      .then(data => {
+        console.log("/signin : data::", data);
+        this.props.changAuthState(() => this.props.history.push("/home"));
+      })
+      .catch(error => {
+        const { status, message } = error;
+
+        if (status === 400) {
+          alert(message);
+        } else if (status === 401) {
+          this.setState({ txtWarning: message });
+        } else if (status === 500) {
+          this.setState({ txtWarning: message });
+          alert("고객센터로 문의 바랍니다.");
+        }
+      });
+  }
+
   render() {
     // const { from } = location.state || { from: { pathname: "/" } };
     // if (isSignedIn) return <Redirect to={from} />;
-
+    if (this.props.authenticated) {
+      this.props.history.push("/home");
+    }
     return (
       <div>
         <form className="form-signin">
@@ -88,6 +107,11 @@ class Signin extends Component {
         </form>
         <div>
           <Link to="/signup">{"Signup"}</Link>
+        </div>
+        <div>
+          <button type="button" onClick={this.googleSignIn}>
+            Google Sign in
+          </button>
         </div>
       </div>
     );
