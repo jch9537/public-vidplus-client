@@ -11,7 +11,7 @@ class Navigation extends Component {
       iconStyle: {
         fontSize: "30px",
         marginLeft: "-8px",
-        marginTop: "-5px"
+        marginTop: "5px"
       },
       collapsed: true,
       redirect: { awaiting: false, path: this.props.path }
@@ -32,7 +32,7 @@ class Navigation extends Component {
         iconStyle: {
           ...this.state.iconStyle,
           marginLeft: "-8px",
-          marginTop: "-5px"
+          marginTop: "5px"
         },
         collapsed
       });

@@ -5,7 +5,7 @@ import NoteList from "./NoteList";
 import "../../styles/Workspace.css";
 import { connect } from "react-redux";
 import { selectSpace } from "../../actions/creators";
-import { Layout, Row, Col, PageHeader } from "antd";
+import { Layout, Row, Col } from "antd";
 const { Content } = Layout;
 
 // 들어오는 url (path)에 따라 redux의 current space를 업데이트
@@ -43,7 +43,6 @@ class Workspace extends Component {
     if (currSpace) {
       return (
         <Layout style={{ padding: "24px 24px 24px 24px" }}>
-          <PageHeader></PageHeader>
           <Content style={{ background: "white", padding: "16px 24px" }}>
             <Title spaceName={this.props.match.params.spaceName} />
             <Row gutter={[16, 16]}>
