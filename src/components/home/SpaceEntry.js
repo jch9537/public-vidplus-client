@@ -73,7 +73,7 @@ class SpaceEntry extends Component {
         />
         <Button
           type="button"
-          value="small"
+          size="small"
           onClick={() => this.handleEdit(space.id)}
           icon="check"
           shape="circle"
@@ -92,13 +92,13 @@ class SpaceEntry extends Component {
           <ButtonGroup>
             <Button
               type="button"
-              value="small"
+              size="large"
               onClick={() => this.handleToggle(space.name)}
               icon="edit"
             />
             <Button
               type="button"
-              value="small"
+              size="large"
               onClick={() => this.handleDelete(space.id)}
               icon="delete"
             />
