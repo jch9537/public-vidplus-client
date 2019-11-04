@@ -5,7 +5,7 @@ const SpaceList = ({ spaces }) => {
   const spaceList =
     spaces === undefined || spaces.length < 1 ? (
       <tr>
-        <td colspan="4">{"There is no WorkSpace"}</td>
+        <td colSpan="4">{"There is no WorkSpace"}</td>
       </tr>
     ) : (
       spaces.map(space => <SpaceEntry space={space} key={space.id} />)
@@ -13,12 +13,12 @@ const SpaceList = ({ spaces }) => {
 
   return (
     <div>
-      <table width="100%">
+      <table width="100%" className="tblSpaces">
         {/* <caption>Work Spaces</caption> */}
         <colgroup>
           <col width="45%" />
-          <col width="15%" />
-          <col width="25%" />
+          <col width="20%" />
+          <col width="20%" />
           <col width="" />
         </colgroup>
         <tbody>{spaceList}</tbody>
