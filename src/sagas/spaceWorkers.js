@@ -30,8 +30,8 @@ export function* addSpaceAsync(action) {
 
 export function* editSpaceAsync(action) {
   try {
-    const id = action.id;
-    const editedSpace = yield call(api, `spaces/${id}`, "PUT", action.name);
+    const { id, name } = action;
+    const editedSpace = yield call(api, `spaces/${id}`, "PUT", { name });
     yield put({
       type: EDIT_SPACE_ASYNC,
       name: editedSpace.name,

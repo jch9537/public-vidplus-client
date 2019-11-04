@@ -9,41 +9,38 @@ import { Layout, Row, Col, PageHeader } from "antd";
 const { Content } = Layout;
 
 // 들어오는 url (path)에 따라 redux의 current space를 업데이트
-function updateCurrSpace(path, props, initial = true) {
+function updateCurrSpace(path, props) {
   const currSpace = props.spaces.filter(space => space.name === path)[0];
   if (currSpace) {
-    // path에 해당되는 space가 존재한다
-    if (initial) {
-      this.state = { validPath: true };
-    } else {
-      this.setState({ validPath: true });
-    }
-    props.selectSpace(currSpace.id);
-  } else {
-    initial
-      ? (this.state = { validPath: false })
-      : this.setState({ validPath: false });
+    props.selectSpace(currSpace.id); // select the current space
+    // 비동기로 처리되는 함수여서 currSpace의 current속성이 바로 true가 안될수도 있다
   }
 }
 
 class Workspace extends Component {
   constructor(props) {
     super(props);
-    // URI is decoded before coming into spaceName
     const { spaceName } = this.props.match.params;
+    // Update the current space (or use {validPath: false} to return 404 page)
     updateCurrSpace.call(this, spaceName, props);
   }
 
   componentDidUpdate(prevProps) {
-    // On url redirect or reload (to different workspace)
     const { spaceName } = this.props.match.params;
-    if (prevProps.match.params.spaceName !== spaceName) {
-      updateCurrSpace.call(this, spaceName, this.props, false);
+    const updateNeeded =
+      prevProps.match.params.spaceName !== spaceName ||
+      prevProps.spaces.length !== this.props.spaces.length;
+    // First conditional determines whether the current space (url) has been changed
+    // Second conditional handles async fetching (b/c props.spaces is initially an empty arr)
+    if (updateNeeded) {
+      updateCurrSpace.call(this, spaceName, this.props);
     }
   }
 
   render() {
-    if (this.state.validPath) {
+    const currSpace = this.props.spaces.filter(space => space.current)[0];
+    // If a space is currently selected (모든 비동기 api호출이 끝난 후)
+    if (currSpace) {
       return (
         <Layout style={{ padding: "24px 24px 24px 24px" }}>
           <PageHeader></PageHeader>
@@ -51,16 +48,17 @@ class Workspace extends Component {
             <Title spaceName={this.props.match.params.spaceName} />
             <Row gutter={[16, 16]}>
               <Col span={12}>
-                <VideoPlayer />
+                <VideoPlayer currSpace={currSpace} />
               </Col>
               <Col span={12}>
-                <NoteList />
+                <NoteList currSpace={currSpace} />
               </Col>
             </Row>
           </Content>
         </Layout>
       );
     } else {
+      // The URL does not correspond to a workspace
       return <div>404: Workspace Not Found</div>;
     }
   }

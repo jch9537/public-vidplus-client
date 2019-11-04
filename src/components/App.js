@@ -14,11 +14,15 @@ import Signin from "./guest/Signin";
 import Signup from "./guest/Signup";
 import Home from "./home/Home";
 import Navigation from "./shared/Navigation";
+import { REMOVE_ERROR } from "../actions/types";
 
 let App = function(props) {
   return (
     <Router>
-      {props.errors.map(error => alert(error.message))}
+      {props.errors.forEach((error, index) => {
+        alert(error.message);
+        props.removeError(index);
+      })}
       <Switch>
         {/*redirect on base URL or /spaces*/}
         <Route exact path="/(|spaces)">
@@ -47,5 +51,12 @@ let App = function(props) {
 const mapStateToProps = state => ({
   errors: state.errors
 });
-App = connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => ({
+  removeError: index => dispatch({ type: REMOVE_ERROR, index })
+});
+
+App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
 export default App;

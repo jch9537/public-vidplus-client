@@ -6,48 +6,51 @@ import NoteInput from "./NoteInput";
 class NoteList extends Component {
   constructor(props) {
     super(props);
-    const currSpace = props.spaces.filter(space => space.current)[0];
-    const notes = props.notes.filter(notes => notes.space_id === currSpace.id);
+    // 현재 워크스페이스에 해당되는 노트만 상태 관리
+    const notes = props.notes.filter(
+      notes => notes.space_id === this.props.currSpace.id
+    );
     // Sort notes in chronological order
     notes.sort(
       (a, b) =>
         a.timestamp.split(":").join("") - b.timestamp.split(":").join("")
     );
-    this.state = { currSpace, notes };
+    this.state = { notes };
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const currSpace = this.props.spaces.filter(space => space.current)[0];
+  componentDidUpdate(prevProps) {
+    // 현재 space가 바뀌었거나 notes에 추가/삭제 됐으면, 노트를 다시 필터링해서 state.notes를 업데이트
     if (
-      prevState.currSpace !== currSpace ||
+      prevProps.currSpace !== this.props.currSpace ||
       prevProps.notes !== this.props.notes
     ) {
       const notes = this.props.notes.filter(
-        notes => notes.space_id === currSpace.id
+        note => note.space_id === this.props.currSpace.id
       );
       // Sort notes in chronological order
       notes.sort(
         (a, b) =>
           a.timestamp.split(":").join("") - b.timestamp.split(":").join("")
       );
-      this.setState({ currSpace, notes });
+      this.setState({ notes });
     }
   }
 
   render() {
     return (
       <div>
-        {this.state.notes.map((note, i) => (
-          <Note note={note} currSpace={this.state.currSpace} key={i} />
+        {// If key!==note.id, the note going into each Note component will change on diff updates,
+        // giving unmatching state.content / timestamp values to the Note component
+        this.state.notes.map(note => (
+          <Note note={note} currSpace={this.props.currSpace} key={note.id} />
         ))}
-        <NoteInput currSpace={this.state.currSpace} />
+        <NoteInput currSpace={this.props.currSpace} />
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  spaces: state.spaces,
   notes: state.notes
 });
 
