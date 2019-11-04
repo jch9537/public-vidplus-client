@@ -10,7 +10,7 @@ class Table extends Component {
 
     return (
       <div>
-        <Signout />
+        <Signout changeAuthState={this.props.changeAuthState} />
         <h2>My Workspaces</h2>
         <SpaceAdder />
         <SpaceList spaces={spaces} />
