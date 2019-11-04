@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./components/App";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import appReducer from "./reducers";
 import logger from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
@@ -23,7 +24,9 @@ store.dispatch({ type: "ADD_NOTES" });
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <Route component={App} />
+    </Router>
   </Provider>,
   document.getElementById("root")
 );
