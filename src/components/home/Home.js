@@ -6,7 +6,7 @@ class Home extends Component {
   render() {
     return (
       <Layout>
-        <Table />
+        <Table changeAuthState={this.props.changeAuthState} />
       </Layout>
     );
   }

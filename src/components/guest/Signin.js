@@ -31,7 +31,7 @@ class Signin extends Component {
     api("user/signin", "POST", { email, password })
       .then(data => {
         console.log("/signin : data::", data);
-        this.props.changAuthState(() => this.props.history.push("/home"));
+        this.props.changeAuthState(() => this.props.history.push("/home"));
       })
       .catch(error => {
         const { status, message } = error;
