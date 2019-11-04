@@ -12,8 +12,11 @@ import {
   CHANGE_CURRTIME
 } from "./types";
 
-export function addSpaces(spaces) {
-  return { type: ADD_SPACES, spaces };
+// Note: These are all action creators that are called in the component level
+// (before fetching). Thus, the format for the addSpaces and addNotes actions
+// are different from their async counterparts.
+export function addSpaces() {
+  return { type: ADD_SPACES };
 }
 
 export function addSpace(space) {
@@ -32,8 +35,8 @@ export function selectSpace(id) {
   return { type: SELECT_SPACE, id };
 }
 
-export function addNotes(notes) {
-  return { type: ADD_NOTES, notes };
+export function addNotes(spaceId) {
+  return { type: ADD_NOTES, spaceId };
 }
 
 export function addNote(note) {

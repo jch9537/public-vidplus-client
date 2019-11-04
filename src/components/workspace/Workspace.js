@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import Title from "./Title";
 import VideoPlayer from "./VideoPlayer";
 import NoteList from "./NoteList";
+import NoteInput from "./NoteInput";
 import "../../styles/Workspace.css";
 import { connect } from "react-redux";
-import { selectSpace } from "../../actions/creators";
+import { selectSpace, addNotes } from "../../actions/creators";
 import { Layout, Row, Col } from "antd";
 const { Content } = Layout;
 
@@ -14,6 +15,7 @@ function updateCurrSpace(path, props) {
   if (currSpace) {
     props.selectSpace(currSpace.id); // select the current space
     // 비동기로 처리되는 함수여서 currSpace의 current속성이 바로 true가 안될수도 있다
+    props.addNotes(currSpace.id); // 현재 space의 노트를 store로 가져온다
   }
 }
 
@@ -48,6 +50,7 @@ class Workspace extends Component {
             <Row gutter={[16, 16]}>
               <Col span={12}>
                 <VideoPlayer currSpace={currSpace} />
+                <NoteInput currSpace={currSpace} />
               </Col>
               <Col span={12}>
                 <NoteList currSpace={currSpace} />
@@ -64,11 +67,13 @@ class Workspace extends Component {
 }
 
 const mapStateToProps = state => ({
-  spaces: state.spaces
+  spaces: state.spaces,
+  notes: state.notes
 });
 
 const mapDispatchToProps = dispatch => ({
-  selectSpace: id => dispatch(selectSpace(id))
+  selectSpace: id => dispatch(selectSpace(id)),
+  addNotes: spaceId => dispatch(addNotes(spaceId))
 });
 
 Workspace = connect(
