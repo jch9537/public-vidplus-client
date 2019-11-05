@@ -25,12 +25,9 @@ class SignOut extends Component {
 
   render() {
     return (
-      <Button
-        type="button"
-        onClick={this.signOut.bind(this)}
-        style={{ float: "right" }}
-        icon="logout"
-      />
+      <Button type="button" onClick={this.signOut.bind(this)} icon="logout">
+        Logout
+      </Button>
     );
   }
 }

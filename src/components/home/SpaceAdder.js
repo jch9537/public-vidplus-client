@@ -99,7 +99,13 @@ class SpaceAdder extends Component {
             placeholder="Space Name!  ex)abc.1_가-ABC"
           />
 
-          <Button type="primary" shape="circle" icon="plus" size="large" />
+          <Button
+            type="primary"
+            shape="circle"
+            icon="plus"
+            htmlType="submit"
+            size="large"
+          />
         </form>
         <p className="txtWarning">{this.state.txtWarning}</p>
       </div>
