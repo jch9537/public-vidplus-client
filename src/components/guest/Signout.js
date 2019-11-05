@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import api from "../../api";
+import { Button } from "antd";
 
 class SignOut extends Component {
   signOut() {
@@ -24,13 +25,12 @@ class SignOut extends Component {
 
   render() {
     return (
-      <button
+      <Button
         type="button"
         onClick={this.signOut.bind(this)}
         style={{ float: "right" }}
-      >
-        Sign Out
-      </button>
+        icon="logout"
+      />
     );
   }
 }

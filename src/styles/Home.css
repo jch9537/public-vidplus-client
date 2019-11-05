@@ -1,0 +1,31 @@
+.formSpaceAdd {
+  width: 100%;
+  display: flex;
+  margin: 10px 0 45px;
+}
+.formSpaceAdd input[type="text"] {
+  margin-right: 1%;
+}
+/* .txtWarning {
+  display: block;
+} */
+.formEditSpaceName button {
+  margin-left: 8px;
+}
+.tblSpaces tr {
+  border-bottom: 1px solid #ddd;
+}
+.tblSpaces td {
+  padding: 10px 5px;
+}
+a,
+a:hover,
+a:visited {
+  color: #333;
+}
+.modifiedTime {
+  color: #999;
+}
+.btnArea {
+  text-align: right;
+}

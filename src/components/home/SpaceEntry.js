@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { deleteSpace, editSpace } from "../../actions/creators";
+import { Input, Button } from "antd";
+const ButtonGroup = Button.Group;
 
 class SpaceEntry extends Component {
   constructor(props) {
@@ -62,15 +64,20 @@ class SpaceEntry extends Component {
     const { space } = this.props;
     const { editMode } = this.state;
     let spaceName = editMode ? (
-      <form className="form-editSpaceName">
-        <input
+      <form className="formEditSpaceName">
+        <Input
+          style={{ width: "80%" }}
           type="text"
           onChange={this.handleNameChange}
           defaultValue={space.name}
         />
-        <button type="button" onClick={() => this.handleEdit(space.id)}>
-          change
-        </button>
+        <Button
+          type="button"
+          size="small"
+          onClick={() => this.handleEdit(space.id)}
+          icon="check"
+          shape="circle"
+        />
       </form>
     ) : (
       <Link to={`/spaces/${space.name}`}>{space.name}</Link>
@@ -80,14 +87,22 @@ class SpaceEntry extends Component {
       <tr>
         <td>{spaceName}</td>
         <td>{space.id} Notes</td>
-        <td>Modified {space.updateAt}</td>
-        <td>
-          <button type="button" onClick={() => this.handleToggle(space.name)}>
-            Edit
-          </button>
-          <button type="button" onClick={() => this.handleDelete(space.id)}>
-            Delete
-          </button>
+        <td className="modifiedTime">Modified: {space.updatedAt}</td>
+        <td className="btnArea">
+          <ButtonGroup>
+            <Button
+              type="button"
+              size="large"
+              onClick={() => this.handleToggle(space.name)}
+              icon="edit"
+            />
+            <Button
+              type="button"
+              size="large"
+              onClick={() => this.handleDelete(space.id)}
+              icon="delete"
+            />
+          </ButtonGroup>
         </td>
       </tr>
     );

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addSpace } from "../../actions/creators";
+import { Input, Button } from "antd";
 
 class SpaceAdder extends Component {
   constructor(props) {
@@ -11,25 +12,26 @@ class SpaceAdder extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       url: "",
-      name: ""
+      name: "",
+      txtWarning: ""
     };
   }
 
   vaildCheck() {
     let result = true;
     const { url, name } = this.state;
-    const txtWarning = document.getElementById("txtWarning");
-    txtWarning.style.display = "none";
 
     const nameReg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|._\-|*]{2,30}$/g;
     if (name === "") {
-      txtWarning.style.display = "block";
-      txtWarning.innerHTML = "Workspace 이름을 입력해주세요";
+      this.setState({
+        txtWarning: "Workspace 이름을 입력해주세요"
+      });
       result = false;
     } else if (!nameReg.test(name)) {
-      txtWarning.style.display = "block";
-      txtWarning.innerHTML = "2자 이상 빈칸 없이 텍스트로 입력해주세요";
-      this.setState({ name: "" });
+      this.setState({
+        txtWarning: "2자 이상 빈칸 없이 텍스트로 입력해주세요",
+        name: ""
+      });
       result = false;
     }
 
@@ -40,13 +42,15 @@ class SpaceAdder extends Component {
     ];
 
     if (url === "") {
-      txtWarning.style.display = "block";
-      txtWarning.innerHTML = "url을 입력해주세요";
+      this.setState({
+        txtWarning: "url을 입력해주세요"
+      });
       result = false;
     } else if (!youTubeRegs[0].test(url) && !youTubeRegs[1].test(url)) {
-      txtWarning.style.display = "block";
-      txtWarning.innerHTML = "url 형식에 맞게 입력해주세요";
-      this.setState({ url: "" });
+      this.setState({
+        txtWarning: "url 형식에 맞게 입력해주세요",
+        url: ""
+      });
       result = false;
     }
     console.log("validate::", result);
@@ -74,28 +78,35 @@ class SpaceAdder extends Component {
   render() {
     return (
       <div>
-        <form className="form-spaceAdd" onSubmit={this.handleSubmit}>
-          <input
+        <form
+          layout="inline"
+          onSubmit={this.handleSubmit}
+          className="formSpaceAdd"
+        >
+          <Input
             type="text"
-            id="inputUrl"
+            size="large"
             value={this.state.url}
             onChange={this.handleUrlChange}
-            placeholder="paste your url"
+            placeholder="Paste your URL"
           />
-          <input
+
+          <Input
             type="text"
-            id="inputName"
+            size="large"
             value={this.state.name}
             onChange={this.handleNameChange}
-            placeholder="write space name! ex) abc.1_가-ABC"
+            placeholder="Space Name!  ex)abc.1_가-ABC"
           />
-          <button type="submit">+</button>
+
+          <Button type="primary" shape="circle" icon="plus" size="large" />
         </form>
-        <p id="txtWarning"></p>
+        <p className="txtWarning">{this.state.txtWarning}</p>
       </div>
     );
   }
 }
+
 const mapDispatchToProps = dispatch => {
   return {
     addSpace: space => dispatch(addSpace(space))
