@@ -36,12 +36,10 @@ class Title extends Component {
       return <Redirect to={`/spaces/${this.state.path}`} />;
     } else {
       const routes = [
-        { path: "/home", breadcrumbName: "Home" },
-        { breadcrumbName: "Workspaces" }
+        { path: "/home", name: "Home" },
+        { path: `/spaces/${this.props.spaceName}`, name: "Workspaces" }
       ];
-      const itemRender = route => (
-        <Link to={route.path}>{route.breadcrumbName}</Link>
-      );
+      const itemRender = route => <Link to={route.path}>{route.name}</Link>;
 
       return (
         <PageHeader breadcrumb={{ itemRender, routes }}>

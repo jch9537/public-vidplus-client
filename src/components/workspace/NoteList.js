@@ -32,7 +32,10 @@ class NoteList extends Component {
 
   render() {
     return (
-      <Scrollbars style={{ height: "calc(100vh - 200px)", minHeight: "160px" }}>
+      <Scrollbars
+        style={{ height: "calc(100vh - 200px)", minHeight: "200px" }}
+        autoHide
+      >
         {// If key!==note.id, the note going into each Note component will change on diff updates,
         // giving unmatching state.content / timestamp values to the Note component
         this.state.notes.map(note => (
