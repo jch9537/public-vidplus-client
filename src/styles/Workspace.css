@@ -24,6 +24,10 @@
   padding-right: 15px;
 }
 
+.note-div a:hover {
+  text-decoration: underline;
+}
+
 .note-div textarea {
   width: calc(100% - 60px);
   font-size: 16px;
