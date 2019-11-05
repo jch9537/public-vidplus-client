@@ -1,17 +1,47 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addNote } from "../../actions/creators";
-import { Input } from "antd";
+import { Row, Col, Input, Button } from "antd";
 const { TextArea } = Input;
+
+function secondsToTimeStamp(currTime) {
+  let minutes = Math.floor(currTime / 60);
+  let hours;
+  if (minutes >= 60) {
+    hours = Math.floor(minutes / 60);
+    minutes = ("0" + (minutes % 60)).slice(-2);
+  }
+  // prepending zero to single digit seconds (match timestamp format)
+  let seconds = ("0" + Math.round(currTime % 60)).slice(-2);
+  return `${hours ? hours + ":" : ""}${minutes}:${seconds}`;
+}
+
+function checkTimestamp(timestamp) {
+  let timestampValid;
+  switch (timestamp.length) {
+    case 4:
+      timestampValid = /\d:[0-5]\d/.test(timestamp);
+      break;
+    case 5:
+      timestampValid = /[0-5]\d:[0-5]\d/.test(timestamp);
+      break;
+    case 7:
+      timestampValid = /\d:[0-5]\d:[0-5]\d/.test(timestamp);
+      break;
+    default:
+      timestampValid = false;
+  }
+  return timestampValid;
+}
 
 class NoteInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
       space_id: props.currSpace.id,
-      content: ""
+      content: "",
+      timestamp: ""
     };
-    this.onChange = this.onChange.bind(this);
     this.onEnter = this.onEnter.bind(this);
   }
 
@@ -25,23 +55,22 @@ class NoteInput extends Component {
     }
   }
 
-  onChange(e) {
-    // Change the content inside the state
-    this.setState({ content: e.target.value });
-  }
-
   onEnter(e) {
     if (e.key === "Enter" && !e.shiftKey) {
-      const currTime = this.props.currTime;
-      // prepending zero to single digit seconds (match timestamp format)
-      let minutes = Math.floor(currTime / 60);
-      let hours;
-      if (minutes >= 60) {
-        hours = Math.floor(minutes / 60);
-        minutes = ("0" + (minutes % 60)).slice(-2);
+      let timestamp;
+      // if timestamp was manually entered by the user
+      if (this.state.timestamp !== "") {
+        timestamp = this.state.timestamp;
+        if (!checkTimestamp(timestamp))
+          return alert(
+            "The timestamp format is not valid. Please follow a MM:SS format."
+          );
+        if (timestamp.length > 4) {
+          timestamp = timestamp.replace(/^0:?0?/, ""); // remove unnecesary 0s
+        }
+      } else {
+        timestamp = secondsToTimeStamp(this.props.currTime);
       }
-      let seconds = ("0" + Math.round(currTime % 60)).slice(-2);
-      const timestamp = `${hours ? hours + ":" : ""}${minutes}:${seconds}`;
       const content = this.state.content.trim(); // remove \n from final enter
       // addNote (id field not needed b/c response from db will automatically create it)
       this.props.addNote({ ...this.state, content, timestamp });
@@ -49,15 +78,41 @@ class NoteInput extends Component {
   }
 
   render() {
+    const timestamp = secondsToTimeStamp(this.props.currTime);
     return (
-      <TextArea
-        value={this.state.content}
-        onChange={this.onChange}
-        onKeyUp={this.onEnter}
-        placeholder="Add note..."
-        style={{ marginTop: "10px", fontSize: "16px" }}
-        autoSize
-      />
+      <Row>
+        <TextArea
+          value={this.state.content}
+          onChange={e => this.setState({ content: e.target.value })}
+          onKeyUp={this.onEnter}
+          placeholder="Add note..."
+          style={{ marginTop: "10px", fontSize: "16px" }}
+          autoSize={{ minRows: 2 }}
+        />
+        <Row>
+          <Col span={12}>
+            <Input
+              placeholder={`Default timestamp: ${timestamp}`}
+              style={{ marginTop: "10px", width: "100%" }}
+              onChange={e => this.setState({ timestamp: e.target.value })}
+            />
+          </Col>
+          <Col span={12} style={{ textAlign: "right" }}>
+            <Button
+              size="large"
+              icon="form"
+              style={{
+                margin: "10px 0 0 10px",
+                maxWidth: "calc(100% - 10px)",
+                overflow: "hidden"
+              }}
+              onClick={() => this.onEnter({ key: "Enter" })}
+            >
+              Add Note
+            </Button>
+          </Col>
+        </Row>
+      </Row>
     );
   }
 }
