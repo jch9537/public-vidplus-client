@@ -92,7 +92,7 @@ class NoteInput extends Component {
         <Row>
           <Col span={12}>
             <Input
-              placeholder={`Default timestamp: ${timestamp}`}
+              placeholder={`Set note timestamp... (Default: ${timestamp})`}
               style={{ marginTop: "10px", width: "100%" }}
               onChange={e => this.setState({ timestamp: e.target.value })}
             />
