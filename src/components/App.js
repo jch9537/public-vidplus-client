@@ -29,7 +29,6 @@ class App extends Component {
     // 상태로 바뀔 것이기 때문에 note와 spaces를 끌어온다
     if (!this.state.authenticated) {
       this.props.addSpaces();
-      this.props.addNotes();
     }
     this.setState({ authenticated: !this.state.authenticated }, callback);
   }
@@ -39,7 +38,6 @@ class App extends Component {
       .then(() => {
         // 접속할 때부터 인증이 되어있다면, 바로 note와 spaces를 끌어온다
         this.props.addSpaces();
-        this.props.addNotes();
         this.setState({ initialRender: false, authenticated: true });
       })
       .catch(() => {

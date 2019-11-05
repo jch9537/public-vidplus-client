@@ -9,9 +9,9 @@ import {
 } from "../actions/types";
 
 // 비동기 처리 (worker 함수)
-export function* addNotesAsync() {
+export function* addNotesAsync(action) {
   try {
-    const existingNotes = yield call(api, "notes", "GET");
+    const existingNotes = yield call(api, `notes?space_id=${action.spaceId}`);
     yield put({ type: ADD_NOTES_ASYNC, notes: existingNotes });
   } catch (error) {
     yield put({ type: ADD_ERROR, error });
