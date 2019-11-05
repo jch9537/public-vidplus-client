@@ -17,12 +17,14 @@ class Table extends Component {
     );
     return (
       <div>
-        <Signout changeAuthState={this.props.changeAuthState} />
-        <PageHeader breadcrumb={{ itemRender, routes }}>
-          <Col>
+        <Col span={14}>
+          <PageHeader breadcrumb={{ itemRender, routes }}>
             <Heading level={2}>Workspaces</Heading>
-          </Col>
-        </PageHeader>
+          </PageHeader>
+        </Col>
+        <Col span={10} style={{ textAlign: "right" }}>
+          <Signout changeAuthState={this.props.changeAuthState} />
+        </Col>
         <SpaceAdder />
         <SpaceList spaces={spaces} />
       </div>
